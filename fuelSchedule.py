@@ -47,29 +47,36 @@ def getInfo(args):
     table.field_names = ["Time", "Fuel", 'CO2']
     gap = []
     for x in range(len(scheduleTime)):
-        fPrice = int(re.sub('[$,]+', '', fuelList[x])) or 999999
-        cPrice = int(re.sub('[$,]+', '', co2List[x])) or 999999
+        fPrice = re.sub('[$,]+', '', fuelList[x])
+        co2Price = re.sub('[$,]+', '', co2List[x])
+        fPrice = int(0 if fPrice == '' else int(fPrice))
+        cPrice = int(0 if co2Price == '' else int(co2Price))
 
-        if (fPrice == 999999):
+        if (fPrice == 0):
             gap.append(scheduleTime[x])
 
         data = {
-            "fPrice": 0,
-            "cPrice": 0
+            "fPrice": '\033[1;31;40m High  \x1b[0m',
+            "cPrice": '\033[1;31;40m High  \x1b[0m'
         }
+
         if (cPrice != 0 or fPrice != 0):
             if (cPrice < co2PriceMax):
                 data["cPrice"] = cPrice
             if (fPrice < fuelPriceMax):
                 data["fPrice"] = fPrice
-            table.add_row([scheduleTime[x], data["fPrice"], data["cPrice"]])
+            if (data['cPrice'] != "\033[1;31;40m High  \x1b[0m" or data['fPrice'] != '\033[1;31;40m High  \x1b[0m'):
+
+                table.add_row(
+                    [scheduleTime[x], data["fPrice"], data["cPrice"]])
+        print(len(gap))
     print("\n\nTimeline in schedules are referring to UTC Game Time, the same as the Game")
     print(
         f"Schedule for the day {day}, fuelPrice < {fuelPriceMax}, co2Price < {co2PriceMax}")
     print(table)
-    if(len(gap) == 2):
+    if(len(gap) > 2):
         print(
-            f"Note: We dont have info beetwen {gap[0]} and {gap[len(gap)-1]} so judge for yourself")
+            f"\033[1;30;41m Note: \x1b[0m We dont have info beetwen {gap[0]} and {gap[len(gap)-1]} so judge for yourself")
 
 
 getInfo(sys.argv)
