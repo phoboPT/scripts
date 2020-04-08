@@ -1,0 +1,13 @@
+priceLog.txt
+.idea
+.vscode
+client_secret.json
+credentials.json
+debug.log
+departPlanes.bat
+fuel message.txt
+token.pickle
+fueldata.json
+fueldataKey.json
+geckodriver.log
+chromedriver.exe
