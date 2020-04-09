@@ -16,27 +16,30 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
 
-@bot.command()
+@bot.command(name="contri", help='Responds with a random quote from Brooklyn 99')
 async def contri(ctx, *args):
     members = json.loads(contributionReq())
     table = getOne(members, args)
 
-    embed = discord.Embed()
-    embed.add_field(name="Company", value=table["name"], inline=True)
+    user = bot.get_user(ctx.author.id)
+
+    embed = discord.Embed(title="Contribution Status",
+                          description=table["name"], color=0xff0000)
+    embed.set_author(name=ctx.author,  icon_url=user.avatar_url)
+    embed.set_thumbnail(
+        url="https://image.flaticon.com/icons/png/512/172/172175.png")
+    embed.add_field(name="Company name", value=table["name"], inline=False)
     embed.add_field(name="Days", value=table["days"], inline=True)
     embed.add_field(name="Total Contribution",
                     value=table["total"], inline=True)
-    embed.add_field(name="Contribution/day", value=table["avr"], inline=True)
-    embed.add_field(name="Flights",
-                    value=table["flights"], inline=True)
-    embed.add_field(name="Flights/Day",
-                    value=table["fligthsAvr"], inline=True)
-    embed.add_field(name="Contributions/Flight",
+    embed.add_field(name="Contribution/Day", value=table["avr"], inline=True)
+    embed.add_field(name="Flights", value=table["flights"], inline=True)
+    embed.add_field(name="Flights/Day", value=table["fligthsAvr"], inline=True)
+    embed.add_field(name="Contribution/Flight",
                     value=table["contriFligth"], inline=True)
-
+    embed.set_footer(text="Created by Phobo Inc")
     await ctx.message.channel.send(embed=embed)
 
-    # await ctx.message.channel.send(table.get_html_string())
 
 
 def contributionReq():
