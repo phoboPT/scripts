@@ -17,7 +17,7 @@ async def on_ready():
 @bot.command()
 async def contri(ctx, *args):
     members = json.loads(contributionReq())
-    table = getOne(members, args[0])
+    table = getOne(members, args)
 
     embed = discord.Embed()
     embed.add_field(name="Company", value=table["name"], inline=True)
@@ -72,7 +72,7 @@ def calcTimestamps(members):
     return table
 
 
-def getOne(members, company):
+def getOne(members, args):
     now = datetime.now()
     table = PrettyTable()
     table.field_names = ["Name", "Days", 'Total Contribution',
@@ -87,10 +87,15 @@ def getOne(members, company):
         'fligthsAvr': '',
         'contriFligth': ''
     }
+    companyName = ''
+    if (len(args) == 1):
+        companyName = args[0]
+    if (len(args) > 1):
+        companyName = f'{args[0]} {args[1]}'
 
     for x in members["members"]:
 
-        if (company.lower() in x["company"].lower()):
+        if (companyName.lower() in x["company"].lower()):
 
             delta = now-datetime.fromtimestamp(
                 1584353085)
@@ -110,9 +115,9 @@ def getOne(members, company):
             data["days"] = delta.days
             data["total"] = f'$ {x["contributed"]}'
             data['avr'] = f'$ {contriDay}'
-            data['flights'] = f'$ {x["flights"]}'
+            data['flights'] = x["flights"]
             data['fligthsAvr'] = fligthsDay
-            data['contriFligth'] = contriFligth
+            data['contriFligth'] = f'$ {contriFligth}'
     return data
 
 
