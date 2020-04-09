@@ -69,7 +69,7 @@ def getInfo(args):
 
                 table.add_row(
                     [scheduleTime[x], data["fPrice"], data["cPrice"]])
-        print(len(gap))
+
     print("\n\nTimeline in schedules are referring to UTC Game Time, the same as the Game")
     print(
         f"Schedule for the day {day}, fuelPrice < {fuelPriceMax}, co2Price < {co2PriceMax}")
