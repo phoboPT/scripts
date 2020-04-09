@@ -26,7 +26,7 @@ async def contri(ctx, *args):
                     value=table["total"], inline=True)
     embed.add_field(name="Contribution/day", value=table["avr"], inline=True)
     embed.add_field(name="Flights",
-                    value=table["fligths"], inline=True)
+                    value=table["flights"], inline=True)
     embed.add_field(name="Flights/Day",
                     value=table["fligthsAvr"], inline=True)
     embed.add_field(name="Contributions/Flight",
