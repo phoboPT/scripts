@@ -4,7 +4,9 @@ import requests
 import json
 from prettytable import PrettyTable
 from datetime import datetime, timedelta
+import locale
 
+locale.setlocale(locale.LC_ALL, 'en_US')
 
 bot = commands.Bot(command_prefix='!')
 
@@ -107,14 +109,14 @@ def getOne(members, args):
                 # print(f' {x["company"]} {x["contributed"]/delta.days}')
             contriDay = round(
                 x["contributed"] / delta.days, 2)
-            fligthsDay = round(x["flights"] / delta.days, 2)
-            contriFligth = round(x['contributed']/x['flights'])
+            fligthsDay = int(x["flights"] / delta.days)
+            contriFligth = round(x['contributed']/x['flights'], 2)
             # table.add_row([x["company"], delta.days, x['contributed'],
             #                contriDay, x["flights"], fligthsDay, contriFligth])
             data["name"] = x["company"]
             data["days"] = delta.days
             data["total"] = f'$ {x["contributed"]}'
-            data['avr'] = f'$ {contriDay}'
+            data['avr'] = f'$ {locale.format("%d", contriDay, grouping=True)}'
             data['flights'] = x["flights"]
             data['fligthsAvr'] = fligthsDay
             data['contriFligth'] = f'$ {contriFligth}'
