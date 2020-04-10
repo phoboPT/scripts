@@ -16,7 +16,7 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
 
-@bot.command(name="contri", help='Responds with a random quote from Brooklyn 99')
+@bot.command(name="contri", help='Member Contribution for the alliance', usage='!contri COMPANY_NAME', description='Im a Contribution helper, you tell me your company, i tell you your performance')
 async def contri(ctx, *args):
     members = json.loads(contributionReq())
     table = getOne(members, args)
