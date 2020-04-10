@@ -37,9 +37,10 @@ async def contri(ctx, *args):
     embed.add_field(name="Flights/Day", value=table["fligthsAvr"], inline=True)
     embed.add_field(name="Contribution/Flight",
                     value=table["contriFligth"], inline=True)
+    embed.add_field(name="Share",
+                    value=table["share"], inline=True)
     embed.set_footer(text="Created by Phobo Inc")
     await ctx.message.channel.send(embed=embed)
-
 
 
 def contributionReq():
@@ -90,7 +91,8 @@ def getOne(members, args):
         'avr': '',
         'flights': '',
         'fligthsAvr': '',
-        'contriFligth': ''
+        'contriFligth': '',
+        'share': ''
     }
     companyName = ''
     if (len(args) == 1):
@@ -123,6 +125,7 @@ def getOne(members, args):
             data['flights'] = x["flights"]
             data['fligthsAvr'] = fligthsDay
             data['contriFligth'] = f'$ {contriFligth}'
+            data['share'] = f'$ {x["shareValue"]}'
     return data
 
 
