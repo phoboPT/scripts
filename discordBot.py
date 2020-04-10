@@ -40,7 +40,7 @@ async def contri(ctx, *args):
     embed.add_field(name="Share",
                     value=table["share"], inline=True)
     embed.set_footer(
-        text="Data updated live from the AM4 API; requests remaining: ")
+        text=f'Data updated live from the AM4 API; requests remaining: {table["totalReq"]}\nCreated by Phobo Inc')
     await ctx.message.channel.send(embed=embed)
 
 
