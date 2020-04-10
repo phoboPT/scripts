@@ -39,7 +39,8 @@ async def contri(ctx, *args):
                     value=table["contriFligth"], inline=True)
     embed.add_field(name="Share",
                     value=table["share"], inline=True)
-    embed.set_footer(text="Created by Phobo Inc")
+    embed.set_footer(
+        text="Data updated live from the AM4 API; requests remaining: ")
     await ctx.message.channel.send(embed=embed)
 
 
@@ -92,7 +93,8 @@ def getOne(members, args):
         'flights': '',
         'fligthsAvr': '',
         'contriFligth': '',
-        'share': ''
+        'share': '',
+        'totalReq': members["status"]["requests_remaining"]
     }
     companyName = ''
     if (len(args) == 1):
