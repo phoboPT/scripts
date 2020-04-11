@@ -11,3 +11,6 @@ fueldata.json
 fueldataKey.json
 geckodriver.log
 chromedriver.exe
+__pycache__
+./helpers/__pycache__
+./cogs/__pycache__
