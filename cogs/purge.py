@@ -15,7 +15,7 @@ class Purge(commands.Cog):
     @commands.command(name="purge", help='Purge tue given amount of messages', description='I\'m a board cleaner')
     @commands.check(isAdmin)
     async def purge(self, ctx, ammount):
-        # await ctx.message.channel.purge(limit=int(ammount))
+        await ctx.message.channel.purge(limit=int(ammount))
         print(f"Purged {ammount}")
 
 
