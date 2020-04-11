@@ -1,10 +1,12 @@
 import discord
 from discord.ext import commands
+from discord.ext.commands import has_permissions, CheckFailure
 import requests
 import json
 from prettytable import PrettyTable
 from datetime import datetime, timedelta
 import locale
+import updateContribution
 
 locale.setlocale(locale.LC_ALL, 'en_US.utf8')
 
@@ -16,7 +18,7 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
 
-@bot.command(name="contri", help='Member Contribution for the alliance', usage='!contri COMPANY_NAME', description='Im a Contribution helper, you tell me your company, i tell you your performance')
+@bot.command(name="contri", help='Member Contribution for the alliance', usage='COMPANY_NAME', description='Im a Contribution helper, you tell me your company, i tell you your performance')
 async def contri(ctx, *args):
     members = json.loads(contributionReq())
     table = getOne(members, args)
@@ -42,6 +44,18 @@ async def contri(ctx, *args):
     embed.set_footer(
         text=f'Data updated live from the AM4 API; requests remaining: {table["totalReq"]}\nCreated by Phobo Inc')
     await ctx.message.channel.send(embed=embed)
+
+
+@bot.command(name="update", help='Contribution Sheet updater', description='Im a Contribution updater, call me and i will update the sheet')
+async def updateSheet(ctx, *args):
+    print(ctx.author.id)
+
+    if(ctx.author.id == 343714644147568650 or ctx.author.id == 686986610142740521 or ctx.author.id == 558418745463406594 or ctx.author.id == 619574286356578336):
+        await ctx.message.channel.send("Updating Sheet")
+        await updateContribution.saveSheet(ctx)
+        await ctx.message.channel.send("Sheet Updated")
+    else:
+        await ctx.message.channel.send("You don't have permissions to use this command")
 
 
 def contributionReq():
