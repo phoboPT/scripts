@@ -47,7 +47,7 @@ async def contri(ctx, *args):
 async def updateSheet(ctx, *args):
     print(ctx.author.id)
 
-    if(ctx.author.id == 343714644147568650 or ctx.author.id == 686986610142740521 or ctx.author.id == 558418745463406594 or ctx.author.id == 619574286356578336):
+    if(ctx.author.id == 343714644147568650 or ctx.author.id == 686986610142740521 or ctx.author.id == 558418745463406594 or ctx.author.id == 619574286356578336 or ctx.author.id == 661953774734016512):
         await ctx.message.channel.send("Updating Sheet")
         await updateContribution.saveSheet(ctx)
         await ctx.message.channel.send("Sheet Updated")
