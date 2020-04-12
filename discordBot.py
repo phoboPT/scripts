@@ -7,9 +7,7 @@ load_dotenv()
 
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-
 bot = commands.Bot(command_prefix='!')
-
 
 for filename in os.listdir('./cogs'):
     if (filename.endswith('.py')):
@@ -37,6 +35,7 @@ async def on_message(message):
     with open('users.json', 'r') as f:
         users = json.load(f)
 
+    await bot.process_commands(message)
     await updateData(users, message.author)
     await addExperience(users, message.author, 5)
     await levelUp(users, message.author, message.channel, message)
