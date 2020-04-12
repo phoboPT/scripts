@@ -14,3 +14,4 @@ chromedriver.exe
 __pycache__
 /helpers/__pycache__
 /cogs/__pycache__
+.env

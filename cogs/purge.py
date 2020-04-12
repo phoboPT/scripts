@@ -16,7 +16,7 @@ class Purge(commands.Cog):
     @commands.check(isAdmin)
     async def purge(self, ctx, ammount):
         await ctx.message.channel.purge(limit=int(ammount))
-        print(f"Purged {ammount}")
+        print(f"{ctx.author} calleg purge and purged {ammount} messages")
 
 
 def setup(client):

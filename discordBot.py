@@ -1,6 +1,12 @@
+import json
 import discord
 from discord.ext import commands
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
+
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
 bot = commands.Bot(command_prefix='!')
 
@@ -16,6 +22,30 @@ async def on_ready():
 
 
 @bot.event
+async def on_member_join(member):
+    with open('users.json', 'r') as f:
+        users = json.load(f)
+
+    await updateData(users, member)
+
+    with open('users.json', 'w') as f:
+        json.dump(users, f)
+
+
+@bot.event
+async def on_message(message):
+    with open('users.json', 'r') as f:
+        users = json.load(f)
+
+    await updateData(users, message.author)
+    await addExperience(users, message.author, 5)
+    await levelUp(users, message.author, message.channel, message)
+
+    with open('users.json', 'w') as f:
+        json.dump(users, f)
+
+
+@bot.event
 async def on_command_error(ctx, error):
     if (isinstance(error, commands.CommandNotFound)):
         await ctx.send("Command not found, use !help")
@@ -26,4 +56,26 @@ async def on_command_error(ctx, error):
         await ctx.send("You don't have permissions to do that")
 
 
-bot.run('NjkwMzQ2OTgwMzI0NjcxNjI3.Xo8AHA.e_Nt9owhCX35ScJj_xy-4HnD8w4')
+async def updateData(users, user):
+    if not str(user.id) in users:
+        print("add")
+        users[str(user.id)] = {}
+        users[str(user.id)]['experience'] = 0
+        users[str(user.id)]['level'] = 1
+
+
+async def addExperience(users, user, exp):
+    users[str(user.id)]['experience'] += exp
+
+
+async def levelUp(users, user, channel, message):
+    experience = users[str(user.id)]['experience']
+    lvlStart = users[str(user.id)]['level']
+    lvlEnd = int(experience ** (1 / 4))
+
+    if (lvlStart < lvlEnd):
+        await message.channel.send('{} has leveled up to level {}'.format(user.mention, lvlEnd))
+        users[str(user.id)]['level'] = lvlEnd
+
+
+bot.run(DISCORD_TOKEN)

@@ -2,13 +2,20 @@ import requests
 import json
 from datetime import datetime, timedelta
 import locale
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+
+AM4_TOKEN = os.getenv("AM4_API_TOKEN")
+
 
 locale.setlocale(locale.LC_ALL, 'en_US.utf8')
 
 
 def contributionReq():
     response = requests.get(
-        'https://www.airline4.net/api/?access_token=klJLKFhweiuyOIsdbfW.ewrm8723LKjhdsQWtyudfnbLKUW&search=jet2%20alliance')
+        f'https://www.airline4.net/api/?access_token={AM4_TOKEN}&search=jet2%20alliance')
     if (response.status_code == 200):
         return response.text
     elif (response.status_code == 404):
