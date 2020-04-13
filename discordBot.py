@@ -51,6 +51,10 @@ async def on_command_error(ctx, error):
 
     if (isinstance(error, commands.MissingRequiredArgument)):
         await ctx.send("You are missing some arguments")
+
+    if (isinstance(error, commands.BotMissingPermissions)):
+        await ctx.send("No permissions")
+
     if (isinstance(error, commands.CheckFailure)):
         await ctx.send("You don't have permissions to do that")
 

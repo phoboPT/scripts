@@ -2,7 +2,6 @@ from discord.ext import tasks, commands
 from discord import Embed
 from helpers import getFuelData
 import re
-from discord.utils import get
 
 
 class FuelMessenger(commands.Cog):
