@@ -24,7 +24,7 @@ class FuelMessenger(commands.Cog):
     @tasks.loop(seconds=1800)
     async def sendFuel(self):
 
-        channel = self.client.get_channel(698498523976564788)
+        channel = self.client.get_channel(687252161222017151)
         price = {}
         price['fuelPrice'] = int(re.sub(
             '[,]+', '', getFuelData.getFuelPrice()))
