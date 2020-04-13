@@ -37,7 +37,7 @@ class FuelMessenger(commands.Cog):
         embed = Embed(title="Fuel & CO2 Price",
                       description='Prices of fuel at the moment', color=0xff0000)
         embed.set_thumbnail(
-            url="https://image.flaticon.com/icons/png/512/172/172175.png")
+            url="https://www.kindpng.com/picc/m/28-288623_computer-icons-money-cash-finance-cash-in-hand.png")
 
         myid = '<@&699301333924052994>'
         if (price['fuelPrice'] <= self.maxFuelPrice):
