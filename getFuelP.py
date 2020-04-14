@@ -144,7 +144,6 @@ def getPrices():
 
 while True:
     timeSleep = 1800
-    getPrices()
     try:
         getPrices()
 
