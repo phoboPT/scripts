@@ -47,13 +47,13 @@ async def on_message(message):
 @bot.event
 async def on_command_error(ctx, error):
     if (isinstance(error, commands.CommandNotFound)):
-        await ctx.send("Command not found, use !help")
+        await ctx.send("L.I.S.A could't found this command, try again or use !help, do it ")
 
     if (isinstance(error, commands.MissingRequiredArgument)):
-        await ctx.send("You are missing some arguments")
+        await ctx.send("I need more arguments to do this, please use !help if you need assistance")
 
     if (isinstance(error, commands.BotMissingPermissions)):
-        await ctx.send("No permissions")
+        await ctx.send("Nice try, but this command is only for Admins, and Phobo")
 
     if (isinstance(error, commands.CheckFailure)):
         await ctx.send("You don't have permissions to do that")
@@ -77,7 +77,7 @@ async def levelUp(users, user, channel, message):
     lvlEnd = int(experience ** (1 / 4))
 
     if (lvlStart < lvlEnd):
-        await message.channel.send('{} has leveled up to level {}'.format(user.mention, lvlEnd))
+        await message.channel.send('{} reached a new level {} 🎉'.format(user.mention, lvlEnd))
         users[str(user.id)]['level'] = lvlEnd
 
 

@@ -9,7 +9,7 @@ class Status(commands.Cog):
         self.client = client
         print("Status command initialized")
 
-    @commands.command(name="status", help='Game Status', description='This command tells you yours status')
+    @commands.command(name="status", help='Game Status', description='This command tells you your status')
     async def status(self, ctx):
         user = self.client.get_user(ctx.author.id)
         with open('users.json', 'r') as f:
