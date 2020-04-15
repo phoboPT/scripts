@@ -16,3 +16,6 @@ __pycache__
 /cogs/__pycache__
 .env
 users.json
+*.txt
+routes
+

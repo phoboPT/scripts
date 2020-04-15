@@ -18,16 +18,19 @@ def getCo2Data(dist, id):
 
 
 def getInfo():
-
     fDemand = 250
-    for i in range(3981):
+    bDemand = 300
+    distanceRange = 13500
+
+    airportList = [2027, 865, 150, 1661, 2763, 3911, 1440, 3500, 3731, 2499]
+    for i in airportList:
         dist = 0
-        name = getCo2Data(1000, i+1)
+        name = getCo2Data(1000, i)
         fileName = name.select(
             " #list > div:nth-child(1) > div:nth-child(1) > div > b:nth-child(1)")
         for y in range(42):
             dist = dist+500
-            html = getCo2Data(dist, i+1)
+            html = getCo2Data(dist, i)
             for x in range(50):
                 route = html.select(
                     f"#list > div:nth-child({x}) > div:nth-child(1) > div")
@@ -40,15 +43,30 @@ def getInfo():
                 f = html.select("#list")[0].select(
                     f'div:nth-child({x})> div:nth-child(5)>b')
                 try:
-                    # if(int(f[0].text) > fDemand):
+
                     print(
                         f'route: {route[0].text} distance: {distance[0].text}')
-                    print(f"E: {e[0].text} B: {b[0].text} F: {f[0].text}")
-                    string = f"route: {route[0].text} distance: {distance[0].text}\n E: {e[0].text} B: {b[0].text} F: {f[0].text}\n"
+                    if(int(distance[0].text) < distanceRange):
+                        if(int(f[0].text) > fDemand):
+                            print(
+                                f"E: {e[0].text} B: {b[0].text} F: {f[0].text}")
+                            string = f"route: {route[0].text} distance: {distance[0].text}\n E: {e[0].text} B: {b[0].text} F: {f[0].text}\n"
 
-                    f = open(f"{fileName[0].text}.txt", "a")
-                    f.write(string)
-                    f.close
+                            f = open(f"{fileName[0].text}.txt", "a")
+                            f.write(string)
+                            f.close
+                    if (int(distance[0].text) > distanceRange):
+                        if(int(b[0].text) > bDemand):
+                            print(
+                                f'route: {route[0].text} distance: {distance[0].text}')
+                            print(
+                                f"E: {e[0].text} B: {b[0].text} F: {f[0].text}")
+                            string = f"route: {route[0].text} distance: {distance[0].text}\n E: {e[0].text} B: {b[0].text} F: {f[0].text}\n"
+
+                            f = open(f"{fileName[0].text}.txt", "a")
+                            f.write(string)
+                            f.close
+
                 except:
                     continue
 
