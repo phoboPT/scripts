@@ -14,7 +14,7 @@ class FuelMessenger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        # self.sendFuel.start()
+        self.sendFuel.start()
         print('We have logged in')
 
     def cog_unload(self):
