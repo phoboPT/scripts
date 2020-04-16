@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
 
 def getCo2Data(dist, id):
@@ -24,12 +25,13 @@ def getInfo():
 
     airportList = [2027, 865, 150, 1661, 2763, 3911, 1440, 3500, 3731, 2499]
     for i in airportList:
-        dist = 0
+        dist = 300
         name = getCo2Data(1000, i)
         fileName = name.select(
             " #list > div:nth-child(1) > div:nth-child(1) > div > b:nth-child(1)")
-        for y in range(42):
-            dist = dist+500
+        for y in range(110):
+            dist = dist + 150
+            print(f'serarching for {dist}')
             html = getCo2Data(dist, i)
             for x in range(50):
                 route = html.select(
@@ -43,11 +45,12 @@ def getInfo():
                 f = html.select("#list")[0].select(
                     f'div:nth-child({x})> div:nth-child(5)>b')
                 try:
-
+                    newDis = re.sub('[,km]+', '', distance[0].text)
                     print(
-                        f'route: {route[0].text} distance: {distance[0].text}')
-                    if(int(distance[0].text) < distanceRange):
-                        if(int(f[0].text) > fDemand):
+                        f'route: {route[0].text} distance: {newDis}')
+
+                    if (int(newDis) < distanceRange):
+                        if (int(f[0].text) > fDemand):
                             print(
                                 f"E: {e[0].text} B: {b[0].text} F: {f[0].text}")
                             string = f"route: {route[0].text} distance: {distance[0].text}\n E: {e[0].text} B: {b[0].text} F: {f[0].text}\n"
@@ -55,7 +58,7 @@ def getInfo():
                             f = open(f"{fileName[0].text}.txt", "a")
                             f.write(string)
                             f.close
-                    if (int(distance[0].text) > distanceRange):
+                    if (int(newDis) > distanceRange):
                         if(int(b[0].text) > bDemand):
                             print(
                                 f'route: {route[0].text} distance: {distance[0].text}')
