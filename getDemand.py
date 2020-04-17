@@ -21,6 +21,7 @@ def getCo2Data(dist, id):
 def getInfo():
     fDemand = 250
     bDemand = 300
+    eDemand = 1500
     distanceRange = 13500
 
     airportList = [2027, 865, 150, 1661, 2763, 3911, 1440, 3500, 3731, 2499]
@@ -69,6 +70,16 @@ def getInfo():
                             f = open(f"{fileName[0].text}.txt", "a")
                             f.write(string)
                             f.close
+                    if(int(e[0].text) > eDemand):
+                        print(
+                            f'route: {route[0].text} distance: {distance[0].text}')
+                        print(
+                            f"E: {e[0].text} B: {b[0].text} F: {f[0].text}")
+                        string = f"route: {route[0].text} distance: {distance[0].text}\n E: {e[0].text} B: {b[0].text} F: {f[0].text}\n"
+
+                        f = open(f"{fileName[0].text}.txt", "a")
+                        f.write(string)
+                        f.close
 
                 except:
                     continue
