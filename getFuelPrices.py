@@ -84,6 +84,7 @@ def buyCo2():
 
     co2Price = int(
         re.sub('[,]+', '', co2Info.find("span", id="sumCost").text))
+
     amountToBuy = int(re.sub(
         '[,]+', '', co2Info.find("span", id="remCapacity").text))
 
