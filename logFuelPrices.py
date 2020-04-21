@@ -149,11 +149,11 @@ def getPrices():
 
 while True:
     timeSleep = 1800
-    # try:
-    getPrices()
+    try:
+        getPrices()
 
-    # except:
-    #     timeSleep = 10
-    #     print("something went wrong")
+    except:
+        timeSleep = 10
+        print("something went wrong")
 
     time.sleep(timeSleep)
