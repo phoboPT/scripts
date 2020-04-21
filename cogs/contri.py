@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord
+from discord import Embed
 from helpers import contributionHelper
 
 
@@ -16,11 +16,10 @@ class Contri(commands.Cog):
             await ctx.send("You are missing some arguments, use !contri <Name>")
         else:
             table = contributionHelper.getOne(args)
-
+            print(table)
             user = self.client.get_user(ctx.author.id)
-
-            embed = discord.Embed(title="Contribution Status",
-                                  description=table["name"], color=0xff0000)
+            embed = Embed(title="Contribution Status",
+                          description=table["name"], color=0xff0000)
             embed.set_author(name=ctx.author,  icon_url=user.avatar_url)
             embed.set_thumbnail(
                 url="https://image.flaticon.com/icons/png/512/172/172175.png")
