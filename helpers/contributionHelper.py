@@ -38,7 +38,7 @@ def getOne(args):
         'totalReq': members["status"]["requests_remaining"],
         'place': 0
     }
-    companyName = 'yhj'
+    companyName = ''
     if (len(args) == 1):
         companyName = args[0]
     if (len(args) > 1):
@@ -49,22 +49,24 @@ def getOne(args):
         i = i+1
 
         if (companyName.lower() in x["company"].lower()):
+
             delta = int((now - resetDate).days)
 
-            delta = now - datetime.fromtimestamp(x['joined'])
+            delta2 = now - datetime.fromtimestamp(x['joined'])
+            print(delta, delta2.days)
 
-            # if (int(delta2.days) <= 24):
-            #     delta = delta2
+            if (int(delta2.days) < int(delta)):
+                delta = delta2.days
 
             # print(f' {x["company"]} {x["contributed"]/delta.days}')
             contriDay = round(
-                x["contributed"] / delta.days, 2)
-            fligthsDay = int(x["flights"] / delta.days)
+                x["contributed"] / delta, 2)
+            fligthsDay = int(x["flights"] / delta)
             contriFligth = round(x['contributed']/x['flights'], 2)
             # table.add_row([x["company"], delta.days, x['contributed'],
             #                contriDay, x["flights"], fligthsDay, contriFligth])
             data["name"] = x["company"]
-            data["days"] = delta.days
+            data["days"] = delta
             data["total"] = f'$ {x["contributed"]}'
             data['avr'] = f'$ {locale.format("%d", contriDay, grouping=True)}'
             data['flights'] = x["flights"]
@@ -73,7 +75,3 @@ def getOne(args):
             data['share'] = f'$ {x["shareValue"]}'
             data['place'] = i
     return data
-
-
-name = "phobo"
-print(getOne(name))
