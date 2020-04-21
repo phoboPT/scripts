@@ -25,6 +25,7 @@ def contributionReq():
 def getOne(args):
     now = datetime.now()
     members = json.loads(contributionReq())
+    resetDate = datetime(2020, 3, 16)
     data = {
         "name": "",
         "days": "",
@@ -37,7 +38,7 @@ def getOne(args):
         'totalReq': members["status"]["requests_remaining"],
         'place': 0
     }
-    companyName = ''
+    companyName = 'yhj'
     if (len(args) == 1):
         companyName = args[0]
     if (len(args) > 1):
@@ -48,15 +49,14 @@ def getOne(args):
         i = i+1
 
         if (companyName.lower() in x["company"].lower()):
+            delta = int((now - resetDate).days)
 
-            delta = now-datetime.fromtimestamp(
-                1584353085)
-            delta2 = now - datetime.fromtimestamp(x['joined'])
+            delta = now - datetime.fromtimestamp(x['joined'])
 
-            if (int(delta2.days) <= 24):
-                delta = delta2
+            # if (int(delta2.days) <= 24):
+            #     delta = delta2
 
-                # print(f' {x["company"]} {x["contributed"]/delta.days}')
+            # print(f' {x["company"]} {x["contributed"]/delta.days}')
             contriDay = round(
                 x["contributed"] / delta.days, 2)
             fligthsDay = int(x["flights"] / delta.days)
@@ -73,3 +73,7 @@ def getOne(args):
             data['share'] = f'$ {x["shareValue"]}'
             data['place'] = i
     return data
+
+
+name = "phobo"
+print(getOne(name))
