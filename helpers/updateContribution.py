@@ -7,6 +7,12 @@ from datetime import datetime, timedelta
 import gspread
 import json
 import locale
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+
+AM4_TOKEN = os.getenv("AM4_API_TOKEN")
 
 cell = {
     0: 'D',
@@ -103,12 +109,8 @@ async def saveSheet(ctx):
 
 def getContributions():
     response = requests.get(
-        'https://www.airline4.net/api/?access_token=klJLKFhweiuyOIsdbfW.ewrm8723LKjhdsQWtyudfnbLKUW&search=jet2%20alliance')
+        f'https://www.airline4.net/api/?access_token={AM4_TOKEN}&search=jet2%20alliance')
     if (response.status_code == 200):
         return response.text
     elif (response.status_code == 404):
         return 0
-
-
-# if __name__ == "__main__":
-#     saveSheet()

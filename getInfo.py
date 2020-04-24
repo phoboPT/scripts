@@ -2,6 +2,10 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from prettytable import PrettyTable
+import os
+from dotenv import load_dotenv
+load_dotenv()
+MY_COOKIE = os.getenv("MY_COOKIE")
 
 aircraftIds = [
     1085744,
@@ -125,7 +129,7 @@ for x in aircraftIds:
         str(x) + '&fbSig=false',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; PHPSESSID=uha1demuouq896v2kvmi6u8s4m'},
+            'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
     )
     if response.status_code == 200:
         info.append(BeautifulSoup(response.text, 'html.parser'))
@@ -141,7 +145,7 @@ for x in aircraftIds:
 
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; PHPSESSID=uha1demuouq896v2kvmi6u8s4m'},
+            'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
     )
     if response.status_code == 200:
         aircraftDetails.append(BeautifulSoup(response.text, 'html.parser'))

@@ -2,13 +2,16 @@ import matplotlib.pyplot as plt
 import requests
 from bs4 import BeautifulSoup
 import json
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
+MY_COOKIE = os.getenv("MY_COOKIE")
 
 stock = requests.get(
     'https://am4.pagespeedster.com/am4/json/userChart.php?id=144424',
     headers={
         'User-Agent': 'Super Cool Browser',
-        'cookie': 'device=app; deviceType=android; PHPSESSID=uha1demuouq896v2kvmi6u8s4m'},
+        'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
 )
 if stock.status_code == 200:
     stockInfo = stock.text

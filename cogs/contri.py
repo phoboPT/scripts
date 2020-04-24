@@ -44,6 +44,10 @@ class Contri(commands.Cog):
             await ctx.send(embed=embed)
         print(f'{ctx.author} called the contribution helper')
 
+    async def getValue(self):
+        print("hi")
+        return "hello"
+
 
 def setup(client):
     client.add_cog(Contri(client))

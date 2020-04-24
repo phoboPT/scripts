@@ -8,12 +8,20 @@ import asyncio
 class Joke(commands.Cog):
     def __init__(self, client):
         self.client = client
+
         print("Joke command initialized")
 
     @commands.command(name="joke", help='Dad Jokes for everyone', description='Call me and i will tell you the best Jokes')
     async def joke(self, ctx):
         joke = dadJoke.getJoke()
         joke = joke['joke']
+
+        economy = self.client.get_cog('Contri')
+        if economy is not None:
+            print("enter")
+            value = await economy.getValue()
+            print(value)
+
         await self.sendJoke(ctx, joke)
 
     async def sendJoke(self, ctx, joke):

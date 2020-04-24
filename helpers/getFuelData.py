@@ -1,13 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+import os
+load_dotenv()
+AM4_SCRAPPING_COOKIE = os.getenv("AM4_SCRAPPING_COOKIE")
 
 
 def getFuelPrice():
     fuelHTML = requests.get(
-        'https://am4.pagespeedster.com/am4/fuel.php?fbSig=false&_=1584038619891',
+        'https://www.airline4.net/fuel.php?fbSig=false&_=1584038619891',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; PHPSESSID=uha1demuouq896v2kvmi6u8s4m'},
+            'cookie':  AM4_SCRAPPING_COOKIE},
     )
 
     if fuelHTML.status_code == 200:
@@ -19,10 +23,10 @@ def getFuelPrice():
 
 def getC02Price():
     co2HTML = requests.get(
-        'https://am4.pagespeedster.com/am4/co2.php?fbSig=false&_=1584038619905',
+        'https://www.airline4.net/co2.php?fbSig=false&_=1584038619905',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; PHPSESSID=uha1demuouq896v2kvmi6u8s4m'},
+            'cookie':  AM4_SCRAPPING_COOKIE},
     )
 
     if co2HTML.status_code == 200:

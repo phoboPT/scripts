@@ -4,25 +4,29 @@ from datetime import datetime
 import sched
 import time
 import re
+from dotenv import load_dotenv
+import os
+load_dotenv()
+MY_COOKIE = os.getenv("MY_COOKIE")
 
 sleepTime = 0
 
 
 def getFuelData():
     return requests.get(
-        'https://am4.pagespeedster.com/am4/fuel.php?fbSig=false&_=1584038619891',
+        'https://www.airline4.net/fuel.php?fbSig=false&_=1584038619891',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; PHPSESSID=uha1demuouq896v2kvmi6u8s4m'},
+            'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
     )
 
 
 def getCo2Data():
     return requests.get(
-        'https://am4.pagespeedster.com/am4/co2.php?fbSig=false&_=1584038619905',
+        'https://www.airline4.net/co2.php?fbSig=false&_=1584038619905',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; PHPSESSID=uha1demuouq896v2kvmi6u8s4m'},
+            'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
     )
 
 
@@ -32,7 +36,7 @@ def sendRequestCo2(amount):
         amount+'&fbSig=false&_=1584653902786',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; PHPSESSID=uha1demuouq896v2kvmi6u8s4m'},
+            'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
     )
 
 
@@ -42,7 +46,7 @@ def sendRequestFuel(amount):
         amount+'&fbSig=false&_=1584653902786',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; PHPSESSID=uha1demuouq896v2kvmi6u8s4m'},
+            'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
     )
 
 
@@ -84,6 +88,7 @@ def buyCo2():
 
     co2Price = int(
         re.sub('[,]+', '', co2Info.find("span", id="sumCost").text))
+
     amountToBuy = int(re.sub(
         '[,]+', '', co2Info.find("span", id="remCapacity").text))
 
