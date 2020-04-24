@@ -1,6 +1,11 @@
 from selenium import webdriver
 import re
 import time
+from dotenv import load_dotenv
+import os
+load_dotenv()
+MY_TOKEN = os.getenv("MY_TOKEN")
+MY_EMAIL = os.getenv("MY_EMAIL")
 starttime = time.time()
 sleepTime = 100
 
@@ -97,11 +102,12 @@ def depart():
     global sleepTime
     options = webdriver.ChromeOptions()
     options.add_argument("headless")
-    browser = webdriver.Chrome(options=options)
+    # browser = webdriver.Chrome(options=options)
 
-    # browser = webdriver.Chrome()
+    browser = webdriver.Chrome()
 
-    browser.get('https://am4.pagespeedster.com/am4/?gameType=app&uid=hugo.branco.c@gmail.com&uid_token=1134a9355afe1c15564f01ac06e3bda6&mail=hugo.branco.c@gmail.com&mail_token=1134a9355afe1c15564f01ac06e3bda6')
+    browser.get(
+        f'https://am4.pagespeedster.com/am4/?gameType=app&uid={MY_EMAIL}&uid_token={MY_TOKEN}&mail={MY_EMAIL}&mail_token={MY_TOKEN}')
 
     checkMarkting(browser)
 
