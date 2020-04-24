@@ -102,9 +102,9 @@ def depart():
     global sleepTime
     options = webdriver.ChromeOptions()
     options.add_argument("headless")
-    # browser = webdriver.Chrome(options=options)
+    browser = webdriver.Chrome(options=options)
 
-    browser = webdriver.Chrome()
+    # browser = webdriver.Chrome()
 
     browser.get(
         f'https://am4.pagespeedster.com/am4/?gameType=app&uid={MY_EMAIL}&uid_token={MY_TOKEN}&mail={MY_EMAIL}&mail_token={MY_TOKEN}')
