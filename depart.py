@@ -98,6 +98,7 @@ def depart():
     options = webdriver.ChromeOptions()
     options.add_argument("headless")
     browser = webdriver.Chrome(options=options)
+
     # browser = webdriver.Chrome()
 
     browser.get('https://am4.pagespeedster.com/am4/?gameType=app&uid=hugo.branco.c@gmail.com&uid_token=1134a9355afe1c15564f01ac06e3bda6&mail=hugo.branco.c@gmail.com&mail_token=1134a9355afe1c15564f01ac06e3bda6')
@@ -113,5 +114,5 @@ while True:
         print(f"wait {int(sleepTime/60)}")
     except:
         print("something went wrong")
-    
+
     time.sleep(sleepTime)
