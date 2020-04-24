@@ -17,7 +17,7 @@ def getFuelData():
         'https://www.airline4.net/fuel.php?fbSig=false&_=1584038619891',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
+            'cookie':  MY_COOKIE}
     )
 
 
@@ -26,7 +26,7 @@ def getCo2Data():
         'https://www.airline4.net/co2.php?fbSig=false&_=1584038619905',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
+            'cookie':  MY_COOKIE},
     )
 
 
@@ -36,7 +36,7 @@ def sendRequestCo2(amount):
         amount+'&fbSig=false&_=1584653902786',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
+            'cookie':  MY_COOKIE},
     )
 
 
@@ -46,7 +46,7 @@ def sendRequestFuel(amount):
         amount+'&fbSig=false&_=1584653902786',
         headers={
             'User-Agent': 'Super Cool Browser',
-            'cookie': 'device=app; deviceType=android; ' + MY_COOKIE},
+            'cookie':  MY_COOKIE},
     )
 
 
