@@ -65,14 +65,14 @@ def buyFuel():
         '[,]+', '', fuelInfo.find("span", id="remCapacity").text))
 
     if (amountToBuy < 1):
-        sleepTime = 1800
+
         print(f"Tank of Fuel full sleep for {int(sleepTime/60)}")
     elif (fuelPrice < 600):
         sendRequestFuel(str(amountToBuy))
-        sleepTime = 300
+
         print(f"buy fuel at {fuelPrice} sleep for {int(sleepTime/60)}")
     else:
-        sleepTime = 1800
+
         print(
             f"Fuel to expensive {fuelPrice} need {amountToBuy} sleep for {int(sleepTime/60)}")
 
@@ -93,23 +93,24 @@ def buyCo2():
         '[,]+', '', co2Info.find("span", id="remCapacity").text))
 
     if (amountToBuy < 1):
-        if (sleepTime > 300):
-            sleepTime = 1800
+
         print(f"Tank of CO2 full sleep for {int(sleepTime/60)}")
     elif (co2Price < 140):
         sendRequestCo2(str(amountToBuy))
-        if (sleepTime > 300):
-            sleepTime = 300
+
         print(
             f"buyed {amountToBuy} of CO2 at {co2Price} sleep for  {int(sleepTime/60)}")
     else:
-        if (sleepTime > 300):
-            sleepTime = 1800
+
         print(
             f"Co2 to expensive {co2Price} need {amountToBuy} sleep for {int(sleepTime/60)}")
 
 
 while True:
-    buyFuel()
-    buyCo2()
+    sleepTime: 1800
+    try:
+        buyFuel()
+        buyCo2()
+    except:
+        sleepTime: 10
     time.sleep(sleepTime)
