@@ -49,7 +49,7 @@ def sendRequestFuel(amount):
 
 
 def buyFuel():
-    global sleepTime
+
     fuelHTML = getFuelData()
 
     if fuelHTML.status_code == 200:
@@ -76,7 +76,7 @@ def buyFuel():
 
 
 def buyCo2():
-    global sleepTime
+
     co2 = getCo2Data()
 
     if co2.status_code == 200:
