@@ -14,14 +14,14 @@ class Fuel(commands.Cog):
     async def fuel(self, ctx, *args):
         fuel = await fuelSchedule.getInfo(args)
         embed = Embed()
-        string = ""
+        string = "```"
         embed = Embed(title=f"Fuel Schedule Day {args[0]}",
                       color=0xff0000)
         embed.set_thumbnail(
             url="https://image.flaticon.com/icons/png/512/172/172175.png")
         for x in fuel:
             string = string + f"{x['schedule']} : {x['co2']}\n"
-
+        string = string+"```"
         embed.add_field(name="Co2 Schedule",
                         value=string, inline=True)
 

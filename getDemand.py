@@ -28,7 +28,7 @@ def getInfo():
     distanceRange = 13500
 
     # airportList = [2027, 865, 150, 1661, 2763, 3911, 1440, 3500, 3731, 2499]
-    airportList = [935, 460]
+    airportList = [3499]
     for i in airportList:
         dist = 0
         name = getDemandHTML(1000, i)

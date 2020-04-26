@@ -43,6 +43,7 @@ def calcContri():
     now = datetime.now()
     allData = []
     members = json.loads(getContributions())
+    resetDate = datetime(2020, 3, 16)
 
     for x in members["members"]:
         data = {
@@ -57,13 +58,13 @@ def calcContri():
             'totalReq': members["status"]["requests_remaining"]
         }
 
-        delta = now-datetime.fromtimestamp(
-            1584353085)
+        delta = int((now - resetDate).days)
+
         delta2 = now - datetime.fromtimestamp(x['joined'])
+        print(delta, delta2.days)
 
-        if (int(delta2.days) <= 24):
-            delta = delta2
-
+        if (int(delta2.days) < int(delta)):
+            delta = delta2.days
         contriDay = round(
             x["contributed"] / delta.days if delta.days != 0 else 1, 2)
         fligthsDay = int(x["flights"] / delta.days if delta.days != 0 else 1)
