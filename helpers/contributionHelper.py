@@ -3,13 +3,12 @@ import json
 from datetime import datetime, timedelta
 import locale
 import os
+import re
+from helpers import updateContribution
 from dotenv import load_dotenv
 load_dotenv()
 
-
 AM4_TOKEN = os.getenv("AM4_API_TOKEN")
-
-
 locale.setlocale(locale.LC_ALL, 'en_US.utf8')
 
 
@@ -36,8 +35,10 @@ def getOne(args):
         'contriFligth': '',
         'share': '',
         'totalReq': members["status"]["requests_remaining"],
-        'place': 0
+        'place': 0,
+        'diffYesterday': 0
     }
+
     companyName = ''
     if (len(args) == 1):
         companyName = args[0]
@@ -49,22 +50,26 @@ def getOne(args):
         i = i+1
 
         if (companyName.lower() in x["company"].lower()):
-
             delta = int((now - resetDate).days)
-
             delta2 = now - datetime.fromtimestamp(x['joined'])
-            print(delta, delta2.days)
 
+            wks = updateContribution.downloadSheet()
+            wks = wks.worksheet("newData")
+            row = wks.find(x['company']).row
+            index = f'M{row}'
+            lastVal = wks.acell(index).value
+            print(lastVal)
+            val = int(re.sub('[$,]+', '', lastVal))
+
+            print(val)
             if (int(delta2.days) < int(delta)):
                 delta = delta2.days
 
-            # print(f' {x["company"]} {x["contributed"]/delta.days}')
             contriDay = round(
                 x["contributed"] / delta, 2)
             fligthsDay = int(x["flights"] / delta)
             contriFligth = round(x['contributed']/x['flights'], 2)
-            # table.add_row([x["company"], delta.days, x['contributed'],
-            #                contriDay, x["flights"], fligthsDay, contriFligth])
+
             data["name"] = x["company"]
             data["days"] = delta
             data["total"] = f'$ {x["contributed"]}'
@@ -74,4 +79,5 @@ def getOne(args):
             data['contriFligth'] = f'$ {contriFligth}'
             data['share'] = f'$ {x["shareValue"]}'
             data['place'] = i
+            data['diffYesterday'] = f'$ {x["contributed"]-val}'
     return data

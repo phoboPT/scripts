@@ -29,12 +29,16 @@ class Contri(commands.Cog):
             embed.add_field(name="Days", value=table["days"], inline=True)
             embed.add_field(name="Total Contribution",
                             value=table["total"], inline=True)
+            embed.add_field(name="Contribution done today",
+                            value=table["diffYesterday"], inline=True)
             embed.add_field(name="Contribution/Day",
                             value=table["avr"], inline=True)
+
             embed.add_field(
                 name="Flights", value=table["flights"], inline=True)
             embed.add_field(name="Flights/Day",
                             value=table["fligthsAvr"], inline=True)
+
             embed.add_field(name="Contribution/Flight",
                             value=table["contriFligth"], inline=True)
             embed.add_field(name="Share",

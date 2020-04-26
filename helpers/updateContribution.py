@@ -22,6 +22,7 @@ cell = {
     4: "H",
     5: "I",
     6: "J",
+    7: 'M'
 
 }
 
@@ -87,7 +88,13 @@ async def saveSheet(ctx):
     row = ''
     for player in data:
         await ctx.message.channel.send(f'updating {player["name"]}')
+
         row = wks.find(player['name']).row
+        index = f'{cell[1]}{row}'
+        val = wks.acell(index).value
+        index = f'{cell[7]}{row}'
+        wks.update_acell(index, val)
+
         index = f'{cell[0]}{row}'
         wks.update_acell(index, player["days"])
         index = f'{cell[1]}{row}'
@@ -100,6 +107,7 @@ async def saveSheet(ctx):
         wks.update_acell(index, player["fligthsAvr"])
         index = f'{cell[5]}{row}'
         wks.update_acell(index, player["contriFligth"])
+
         time.sleep(10)
 
 
