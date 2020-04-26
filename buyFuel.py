@@ -98,18 +98,19 @@ def buyCo2():
         sendRequestCo2(str(amountToBuy))
 
         print(
-            f"buyed {amountToBuy} of CO2 at {co2Price} sleep for  ")
+            f"buyed {amountToBuy} of CO2 at {co2Price}   ")
     else:
 
         print(
-            f"Co2 to expensive {co2Price} need {amountToBuy} sleep for")
+            f"Co2 to expensive {co2Price} need {amountToBuy} ")
 
 
 while True:
-    sleepTime: 1800
     try:
+        sleepTime = 1800
         buyFuel()
         buyCo2()
     except:
-        sleepTime: 10
+        sleepTime = 10
+
     time.sleep(sleepTime)
