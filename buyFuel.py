@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 MY_COOKIE = os.getenv("MY_COOKIE")
+sleepTime = 0
 
 
 def getFuelData():
