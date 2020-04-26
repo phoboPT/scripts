@@ -20,52 +20,59 @@ def downloadSheet():
 
 
 async def getInfo(args):
-    # fuelPriceMax = 600
+    fuelPriceMax = 600
     co2PriceMax = 125
     wks = downloadSheet()
     day = args[0]
 
-    # if (len(args) > 2):
-    #     fuelPriceMax = int(args[2])
+    if (len(args) > 2):
+        fuelPriceMax = int(args[1])
     if(len(args) > 2):
         co2PriceMax = int(args[2])
 
     co2Sheet = wks.worksheet("CO2")
-    # fuelSheet = wks.worksheet("New Fuel")
+    fuelSheet = wks.worksheet("New Fuel")
 
     scheduleTime = co2Sheet.col_values(1)
     co2List = co2Sheet.col_values(int(day) + 1)
-    # fuelList = fuelSheet.col_values(int(day) + 1)
-    # del fuelList[0:3]
+    fuelList = fuelSheet.col_values(int(day) + 1)
+    del fuelList[0:3]
     del co2List[0:3]
     del scheduleTime[0:3]
     table = []
 
     for x in range(len(scheduleTime)):
-        # fPrice = re.sub('[$,]+', '', fuelList[x])
+        fPrice = re.sub('[$,]+', '', fuelList[x])
         co2Price = re.sub('[$,]+', '', co2List[x])
-        # fPrice = int(0 if fPrice == '' else int(fPrice))
+        fPrice = int(0 if fPrice == '' else int(fPrice))
         cPrice = int(0 if co2Price == '' else int(co2Price))
 
         # if (fPrice == 0):
         #     gap.append(scheduleTime[x])
 
         data = {
-            # "fPrice": '\033[1;31;40m High  \x1b[0m',
-            "cPrice": '\033[1;31;40m High  \x1b[0m'
+            "fPrice": '\'High\'',
+            "cPrice": '\'High\''
         }
 
-        # if (cPrice != 0 or fPrice != 0):
-        if (cPrice != 0):
-            if (cPrice < co2PriceMax):
-                data["cPrice"] = cPrice
-            # if (fPrice < fuelPriceMax):
-            #     data["fPrice"] = fPrice
-            # if (data['cPrice'] != "\033[1;31;40m High  \x1b[0m" or data['fPrice'] != '\033[1;31;40m High  \x1b[0m'):
-            if (data['cPrice'] != "\033[1;31;40m High  \x1b[0m"):
+        if (cPrice != 0 or fPrice != 0):
+            if (cPrice != 0):
+                if (cPrice < co2PriceMax):
+                    data["cPrice"] = cPrice
+            if (fPrice < fuelPriceMax):
+
+                data["fPrice"] = fPrice
+            if (data['cPrice'] != "\'High\'" or data['fPrice'] != "\'High\'"):
+                if (len(scheduleTime[x]) < 5):
+                    scheduleTime[x] = f'0{scheduleTime[x]}'
+
+                if (len(str(data['fPrice'])) < 5):
+                    data['fPrice'] = f' {str(data["fPrice"])}  '
+                if (len(str(data['cPrice'])) < 5):
+                    data['cPrice'] = f' {str(data["cPrice"])}'
 
                 table.append(
-                    {"schedule": scheduleTime[x], "co2": data["cPrice"]})
+                    {"schedule": scheduleTime[x], "co2": data["cPrice"], "fuel": data["fPrice"]})
 
                 # table.add_row(
                 #     [scheduleTime[x], data["fPrice"], data["cPrice"]])

@@ -45,18 +45,17 @@ def calcContri():
     members = json.loads(getContributions())
     resetDate = datetime(2020, 3, 16)
 
+    data = {
+        "name": "",
+        "days": "",
+        'total': '',
+        'avr': '',
+        'flights': '',
+        'fligthsAvr': '',
+        'contriFligth': '',
+    }
+
     for x in members["members"]:
-        data = {
-            "name": "",
-            "days": "",
-            'total': '',
-            'avr': '',
-            'flights': '',
-            'fligthsAvr': '',
-            'contriFligth': '',
-            'share': '',
-            'totalReq': members["status"]["requests_remaining"]
-        }
 
         delta = int((now - resetDate).days)
 
@@ -66,12 +65,12 @@ def calcContri():
         if (int(delta2.days) < int(delta)):
             delta = delta2.days
         contriDay = round(
-            x["contributed"] / delta.days if delta.days != 0 else 1, 2)
-        fligthsDay = int(x["flights"] / delta.days if delta.days != 0 else 1)
+            x["contributed"] / delta if delta != 0 else 1, 2)
+        fligthsDay = int(x["flights"] / delta if delta != 0 else 1)
         contriFligth = round(x['contributed']/x['flights'], 2)
 
         data["name"] = x["company"]
-        data["days"] = delta.days
+        data["days"] = delta
         data["total"] = x["contributed"]
         data['avr'] = contriDay
         data['flights'] = x["flights"]
@@ -91,7 +90,6 @@ async def saveSheet(ctx):
     row = ''
     for player in data:
         await ctx.message.channel.send(f'updating {player["name"]}')
-        # print(f'updating {player["name"]}')
         row = wks.find(player['name']).row
         index = f'{cell[0]}{row}'
         wks.update_acell(index, player["days"])

@@ -14,34 +14,21 @@ class Fuel(commands.Cog):
     async def fuel(self, ctx, *args):
         fuel = await fuelSchedule.getInfo(args)
         embed = Embed()
-        string = "```"
+        string = "```ml\n Time   Fuel    CO2\n"
         embed = Embed(title=f"Fuel Schedule Day {args[0]}",
                       color=0xff0000)
-        embed.set_thumbnail(
-            url="https://image.flaticon.com/icons/png/512/172/172175.png")
-        for x in fuel:
-            string = string + f"{x['schedule']} : {x['co2']}\n"
-        string = string+"```"
-        embed.add_field(name="Co2 Schedule",
-                        value=string, inline=True)
 
+        for x in fuel:
+            string = string + \
+                f"{x['schedule']} : {x['fuel']} : {x['co2']}\n"
+
+        string = string+"```"
+        embed.add_field(name="Fuel Schedule",
+                        value=string, inline=True)
         embed.set_footer(
             text=f'Data updated live from our database;\nCreated by Phobo Inc')
 
         await ctx.send(embed=embed)
-
-    # async def sendJoke(self, ctx, joke):
-        # embed = Embed(title="Dad Joke",
-        #               color=0xff0000)
-
-        # embed.set_thumbnail(
-        #     url="https://www.dictionary.com/e/wp-content/uploads/2018/06/dad-joke.jpg")
-        # embed.add_field(name="Joke",
-        #                 value=f'{joke}', inline=False)
-
-        # embed.set_footer(
-        #     text=f'Data updated live \nCreated by Phobo Inc')
-        # await ctx.send(embed=embed)
 
 
 def setup(client):

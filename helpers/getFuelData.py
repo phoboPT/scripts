@@ -18,7 +18,7 @@ def getFuelPrice():
         fuelInfo = BeautifulSoup(fuelHTML.text, 'html.parser')
     elif fuelHTML.status_code == 404:
         print('Not Found id=144424')
-    print(fuelInfo)
+
     return fuelInfo.find("span", id="sumCost").text
 
 
