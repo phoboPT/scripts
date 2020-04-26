@@ -45,22 +45,20 @@ def calcContri():
     members = json.loads(getContributions())
     resetDate = datetime(2020, 3, 16)
 
-    data = {
-        "name": "",
-        "days": "",
-        'total': '',
-        'avr': '',
-        'flights': '',
-        'fligthsAvr': '',
-        'contriFligth': '',
-    }
-
     for x in members["members"]:
+        data = {
+            "name": "",
+            "days": "",
+            'total': '',
+            'avr': '',
+            'flights': '',
+            'fligthsAvr': '',
+            'contriFligth': '',
+        }
 
         delta = int((now - resetDate).days)
 
         delta2 = now - datetime.fromtimestamp(x['joined'])
-        print(delta, delta2.days)
 
         if (int(delta2.days) < int(delta)):
             delta = delta2.days
@@ -78,7 +76,6 @@ def calcContri():
         data['contriFligth'] = contriFligth
 
         allData.append(data)
-
     return allData
 
 
