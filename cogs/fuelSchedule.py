@@ -14,7 +14,7 @@ class Fuel(commands.Cog):
     async def fuel(self, ctx, *args):
         fuel = await fuelSchedule.getInfo(args)
         embed = Embed()
-        string = "```ml\n Time   Fuel    CO2\n"
+        string = "```ml\n Time    Fuel     CO2\n"
         embed = Embed(title=f"Fuel Schedule Day {args[0]}",
                       color=0xff0000)
 
