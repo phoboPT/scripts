@@ -64,15 +64,15 @@ def buyFuel():
 
     if (amountToBuy < 1):
 
-        print(f"Tank of Fuel full sleep for {int(sleepTime/60)}")
+        print(f"Tank of Fuel full sleep for ")
     elif (fuelPrice < 600):
         sendRequestFuel(str(amountToBuy))
 
-        print(f"buy fuel at {fuelPrice} sleep for {int(sleepTime/60)}")
+        print(f"buy fuel at {fuelPrice} sleep for ")
     else:
 
         print(
-            f"Fuel to expensive {fuelPrice} need {amountToBuy} sleep for {int(sleepTime/60)}")
+            f"Fuel to expensive {fuelPrice} need {amountToBuy} sleep for ")
 
 
 def buyCo2():
@@ -92,7 +92,7 @@ def buyCo2():
 
     if (amountToBuy < 1):
 
-        print(f"Tank of CO2 full sleep for {int(sleepTime/60)}")
+        print(f"Tank of CO2 full sleep for ")
     elif (co2Price < 140):
         sendRequestCo2(str(amountToBuy))
 
