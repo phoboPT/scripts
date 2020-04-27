@@ -69,7 +69,7 @@ def buyFuel():
     elif (fuelPrice < 600):
         sendRequestFuel(str(amountToBuy))
 
-        print(f"buy fuel at {fuelPrice} sleep for ")
+        print(f"buy fuel at {fuelPrice} ")
     else:
 
         print(

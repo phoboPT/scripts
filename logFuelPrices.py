@@ -86,7 +86,7 @@ def downloadSheet():
 
     gc = gspread.authorize(credentials)
 
-    return gc.open("Airline Manager 4 Co2 and Fuel Table")
+    return gc.open("Airline Manager 4 Co2 and Fuel Table Phobo")
 
 
 def saveSheet(fuelPrice, co2Price, today):
@@ -115,7 +115,6 @@ def saveSheet(fuelPrice, co2Price, today):
     else:
         index = dayToCell[date] + str(index)
 
-    print(index)
     oldFuelPrice = fuelSheet.acell(index).value or 0
     oldCo2Price = co2Sheet.acell(index).value or 0
 
@@ -154,7 +153,6 @@ while True:
     timeSleep = 1800
     try:
         getPrices()
-
     except:
         timeSleep = 10
         print("something went wrong")
