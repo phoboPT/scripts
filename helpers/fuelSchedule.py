@@ -16,7 +16,7 @@ def downloadSheet():
 
     gc = gspread.authorize(credentials)
 
-    return gc.open("Airline Manager 4 Co2 and Fuel Table")
+    return gc.open("Airline Manager 4 Co2 and Fuel Table Phobo")
 
 
 async def getInfo(args):
