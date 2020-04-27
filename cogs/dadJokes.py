@@ -18,9 +18,8 @@ class Joke(commands.Cog):
 
         economy = self.client.get_cog('Contri')
         if economy is not None:
-            print("enter")
+
             value = await economy.getValue()
-            print(value)
 
         await self.sendJoke(ctx, joke)
 
@@ -35,7 +34,9 @@ class Joke(commands.Cog):
 
         embed.set_footer(
             text=f'Data updated live \nCreated by Phobo Inc')
+
         await ctx.send(embed=embed)
+        print(f'{ctx.author} called the dad jokes')
 
 
 def setup(client):

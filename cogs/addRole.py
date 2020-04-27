@@ -15,6 +15,7 @@ class Contri(commands.Cog):
 
         role = discord.utils.get(member.guild.roles, name="Price Notify")
         await member.add_roles(role)
+        print(f'{ctx.author} called the add role')
         await ctx.send("Role added successfully")
 
 

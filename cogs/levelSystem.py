@@ -29,6 +29,7 @@ class Status(commands.Cog):
         embed.set_footer(
             text=f'Data updated live \nCreated by Phobo Inc')
         await ctx.send(embed=embed)
+        print(f'{ctx.author} called the status')
 
 
 def setup(client):

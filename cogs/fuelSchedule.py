@@ -29,6 +29,7 @@ class Fuel(commands.Cog):
             text=f'Data updated live from our database;\nCreated by Phobo Inc')
 
         await ctx.send(embed=embed)
+        print(f'{ctx.author} called the fuelSchedule')
 
 
 def setup(client):

@@ -16,7 +16,7 @@ class Contri(commands.Cog):
             await ctx.send("You are missing some arguments, use !contri <Name>")
         else:
             table = contributionHelper.getOne(args)
-            print(table)
+
             user = self.client.get_user(ctx.author.id)
             embed = Embed(title="Contribution Status",
                           description=table["name"], color=0xff0000)
@@ -47,10 +47,6 @@ class Contri(commands.Cog):
                 text=f'Data updated live from the AM4 API; requests remaining: {table["totalReq"]}\nCreated by Phobo Inc')
             await ctx.send(embed=embed)
         print(f'{ctx.author} called the contribution helper')
-
-    async def getValue(self):
-        print("hi")
-        return "hello"
 
 
 def setup(client):
