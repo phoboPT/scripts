@@ -8,7 +8,7 @@ class Contri(commands.Cog):
         self.client = client
         print("Contri command initialized")
 
-    @commands.command(name="role", help='Member Contribution for the alliance', usage='COMPANY_NAME', description='Im a Contribution helper, you tell me your company, i tell you your performance', )
+    @commands.command(name="role", help='Add the price notify role', description='Just call me an i will give you the PriceNotify role', )
     async def role(self, ctx,
                    ):
         member = ctx.message.author
