@@ -56,12 +56,11 @@ def getOne(args):
             wks = updateContribution.downloadSheet()
             wks = wks.worksheet("newData")
             row = wks.find(x['company']).row
-            index = f'M{row}'
+            index = f'E{row}'
             lastVal = wks.acell(index).value
             print(lastVal)
             val = int(re.sub('[$,]+', '', lastVal))
 
-            print(val)
             if (int(delta2.days) < int(delta)):
                 delta = delta2.days
 
