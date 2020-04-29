@@ -36,7 +36,8 @@ def getOne(args):
         'share': '',
         'totalReq': members["status"]["requests_remaining"],
         'place': 0,
-        'diffYesterday': 0
+        'diffYesterday': 0,
+        'yesterday': 0
     }
 
     companyName = ''
@@ -57,9 +58,12 @@ def getOne(args):
             wks = wks.worksheet("newData")
             row = wks.find(x['company']).row
             index = f'E{row}'
-            lastVal = wks.acell(index).value
-            print(lastVal)
-            val = int(re.sub('[$,]+', '', lastVal))
+            todayCont = wks.acell(index).value
+            todayValue = int(re.sub('[$,]+', '', todayCont))
+
+            index = f'M{row}'
+            yesterdayCont = wks.acell(index).value
+            yesterdayValue = int(re.sub('[$,]+', '', yesterdayCont))
 
             if (int(delta2.days) < int(delta)):
                 delta = delta2.days
@@ -71,12 +75,14 @@ def getOne(args):
 
             data["name"] = x["company"]
             data["days"] = delta
-            data["total"] = f'$ {x["contributed"]}'
+            data["total"] = f'$ {locale.format("%d", x["contributed"],grouping=True)}'
             data['avr'] = f'$ {locale.format("%d", contriDay, grouping=True)}'
-            data['flights'] = x["flights"]
-            data['fligthsAvr'] = fligthsDay
+            data['flights'] = locale.format("%d",  x["flights"], grouping=True)
+            data['fligthsAvr'] = locale.format("%d", fligthsDay, grouping=True)
             data['contriFligth'] = f'$ {contriFligth}'
             data['share'] = f'$ {x["shareValue"]}'
             data['place'] = i
-            data['diffYesterday'] = f'$ {x["contributed"]-val}'
+            data['diffYesterday'] = f'$ {locale.format("%d", x["contributed"]-todayValue,grouping=True)}'
+            data['yesterday'] = locale.format(
+                "%d", x['contributed']-yesterdayValue, grouping=True)
     return data
