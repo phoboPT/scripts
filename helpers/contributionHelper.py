@@ -61,7 +61,7 @@ def getOne(args):
             todayCont = wks.acell(index).value
             todayValue = int(re.sub('[$,]+', '', todayCont))
 
-            index = f'M{row}'
+            index = f'N{row}'
             yesterdayCont = wks.acell(index).value
             yesterdayValue = int(re.sub('[$,]+', '', yesterdayCont))
 
@@ -84,5 +84,5 @@ def getOne(args):
             data['place'] = i
             data['diffYesterday'] = f'$ {locale.format("%d", x["contributed"]-todayValue,grouping=True)}'
             data['yesterday'] = locale.format(
-                "%d", x['contributed']-yesterdayValue, grouping=True)
+                "%d", yesterdayValue, grouping=True)
     return data
