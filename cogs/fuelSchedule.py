@@ -9,6 +9,9 @@ class Fuel(commands.Cog):
         self.client = client
         print("Joke command initialized")
 
+    def cog_unload(self):
+        print("Unload fuel schedule command")
+
     @commands.check(isAdmin.isAdmin)
     @commands.command(name="fuel", help='fuel', description='Fuel schedule')
     async def fuel(self, ctx, *args):

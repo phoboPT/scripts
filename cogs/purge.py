@@ -9,6 +9,9 @@ class Purge(commands.Cog):
         self.client = client
         print("Purge command initialized")
 
+    def cog_unload(self):
+        print("Unload purge command")
+
     @commands.command(name="purge", help='Purge tue given amount of messages', description='I\'m a board cleaner')
     @commands.check(isAdmin.isAdmin)
     async def purge(self, ctx, ammount):

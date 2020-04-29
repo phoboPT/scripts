@@ -2,7 +2,6 @@ from discord.ext import commands
 from discord import Embed
 import json
 from helpers import dadJoke
-import asyncio
 
 
 class Joke(commands.Cog):
@@ -10,6 +9,9 @@ class Joke(commands.Cog):
         self.client = client
 
         print("Joke command initialized")
+
+    def cog_unload(self):
+        print("Unload dadJoke command")
 
     @commands.command(name="joke", help='Dad Jokes for everyone', description='Call me and i will tell you the best Jokes')
     async def joke(self, ctx):

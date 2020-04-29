@@ -13,6 +13,9 @@ class Update(commands.Cog):
         self.client = client
         print("Update command initialized")
 
+    def cog_unload(self):
+        print("Unload update command")
+
     @commands.command(name="update", help='Contribution Sheet updater', description='Im a Contribution updater, call me and i will update the sheet')
     @commands.check(isAdmin)
     async def updateSheet(self, ctx):

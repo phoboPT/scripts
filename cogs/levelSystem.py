@@ -9,6 +9,9 @@ class Status(commands.Cog):
         self.client = client
         print("Status command initialized")
 
+    def cog_unload(self):
+        print("Unload level system command")
+
     @commands.command(name="status", help='Game Status', description='This command tells you your status')
     async def status(self, ctx):
         user = self.client.get_user(ctx.author.id)

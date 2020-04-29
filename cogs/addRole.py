@@ -2,11 +2,14 @@ from discord.ext import commands
 import discord
 
 
-class Contri(commands.Cog):
+class Role(commands.Cog):
 
     def __init__(self, client):
         self.client = client
-        print("Contri command initialized")
+        print("Role command initialized")
+
+    def cog_unload(self):
+        print("Unload role command")
 
     @commands.command(name="role", help='Add the price notify role', description='Just call me an i will give you the PriceNotify role', )
     async def role(self, ctx,
@@ -20,4 +23,4 @@ class Contri(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(Contri(client))
+    client.add_cog(Role(client))
