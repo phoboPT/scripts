@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from prettytable import PrettyTable
 import os
+import time
 from dotenv import load_dotenv
 load_dotenv()
 MY_COOKIE = os.getenv("MY_COOKIE")
@@ -119,11 +120,37 @@ aircraftIds = [
     3111030,
     3148269,
     3188214,
-    3216999
+    3216999,
+    3243949,
+    3268600,
+    3299559,
+    3326439,
+    3355040,
+    3384304,
+    3405493,
+    3428598,
+    3456497,
+    3481528,
+    3504694,
+    3554580,
+    3611053,
+    3642678,
+    3642679,
+    3663053,
+    3673380,
+    3695102,
+    3707429,
+    3729521,
+    3740154,
+    3756778,
+    3767071,
+    3786267,
+    3797488,
 ]
 info = []
 
 for x in aircraftIds:
+
     response = requests.get(
         'https://am4.pagespeedster.com/am4/fleet_details.php?id=' +
         str(x) + '&fbSig=false',
@@ -135,6 +162,7 @@ for x in aircraftIds:
         info.append(BeautifulSoup(response.text, 'html.parser'))
     elif response.status_code == 404:
         print('Not Found id=' + x)
+    time.sleep(2)
 
 aircraftDetails = []
 # get info from aircraft
@@ -151,6 +179,7 @@ for x in aircraftIds:
         aircraftDetails.append(BeautifulSoup(response.text, 'html.parser'))
     elif response.status_code == 404:
         print('Not Found id=' + x)
+    time.sleep(2)
 
 acDetails = []
 origin = []
