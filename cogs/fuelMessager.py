@@ -41,8 +41,8 @@ class FuelMessenger(commands.Cog):
             string = f'Fuel Price {price["fuelPrice"]} $'
             send = 1
             if (price['fuelPrice'] <= self.minFuelPrice):
-                print("teste")
-                # await channel.send('%s' % myid)
+
+                await channel.send('%s' % myid)
 
         if (price['co2Price'] <= self.maxCo2Price):
             string = string+f'CO2 Price {price["co2Price"]} $'
