@@ -30,7 +30,6 @@ class Update(commands.Cog):
 
     @tasks.loop(seconds=300)
     async def update(self):
-
         now = datetime.now()
         hour = now.strftime("%H")
 
