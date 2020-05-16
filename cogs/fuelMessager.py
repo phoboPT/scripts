@@ -15,7 +15,6 @@ class FuelMessenger(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         self.sendFuel.start()
-        print('We have logged in')
 
     def cog_unload(self):
         print("Unload Fuel Messenger command")
@@ -24,6 +23,7 @@ class FuelMessenger(commands.Cog):
     async def sendFuel(self):
 
         channel = self.client.get_channel(687252161222017151)
+        # channel = self.client.get_channel(697768447882559548)
         price = {}
         price['fuelPrice'] = int(re.sub(
             '[,]+', '', getFuelData.getFuelPrice()))
@@ -36,21 +36,22 @@ class FuelMessenger(commands.Cog):
         send = 0
 
         myid = '<@&699301333924052994>'
+        # myid = '<@&698179530711629854>'
+        # price['fuelPrice'] = 400
+        # price['co2Price'] = 120
         string = ""
         if (price['fuelPrice'] <= self.maxFuelPrice):
-            string = f'Fuel Price {price["fuelPrice"]} $'
+            string = f'Fuel Price {price["fuelPrice"]}$'
             send = 1
             if (price['fuelPrice'] <= self.minFuelPrice):
-
-                await channel.send('%s' % myid)
+                string = f'{myid} {string}'
 
         if (price['co2Price'] <= self.maxCo2Price):
-            string = string+f'CO2 Price {price["co2Price"]} $'
+            string = string+f' CO2 Price {price["co2Price"]}$'
             send = 1
 
         if (send == 1):
-            embed = Embed(title=string)
-            await channel.send(embed=embed)
+            await channel.send(string)
 
 
 def setup(client):
