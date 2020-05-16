@@ -34,26 +34,22 @@ class FuelMessenger(commands.Cog):
 
     async def message(self, price, channel):
         send = 0
-        embed = Embed(title="Fuel & CO2 Price",
-                      description='Prices of fuel at the moment', color=0xff0000)
-        embed.set_thumbnail(
-            url="https://www.kindpng.com/picc/m/28-288623_computer-icons-money-cash-finance-cash-in-hand.png")
 
         myid = '<@&699301333924052994>'
+        string = ""
         if (price['fuelPrice'] <= self.maxFuelPrice):
-            embed.add_field(name="Fuel Price",
-                            value=f'{price["fuelPrice"]} $', inline=False)
+            string = f'Fuel Price {price["fuelPrice"]} $'
             send = 1
             if (price['fuelPrice'] <= self.minFuelPrice):
-
-                await channel.send('%s' % myid)
+                print("teste")
+                # await channel.send('%s' % myid)
 
         if (price['co2Price'] <= self.maxCo2Price):
-            embed.add_field(name="CO2 Price",
-                            value=f'{price["co2Price"]} $', inline=False)
+            string = string+f'CO2 Price {price["co2Price"]} $'
             send = 1
 
         if (send == 1):
+            embed = Embed(title=string)
             await channel.send(embed=embed)
 
 
