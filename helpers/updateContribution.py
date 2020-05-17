@@ -87,7 +87,7 @@ async def saveSheet(ctx):
 
     row = ''
     for player in data:
-        await ctx.message.channel.send(f'updating {player["name"]}')
+        await ctx.send(f'updating {player["name"]}')
 
         row = wks.find(player['name']).row
         index = f'{cell[1]}{row}'

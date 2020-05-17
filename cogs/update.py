@@ -29,14 +29,14 @@ class Update(commands.Cog):
         await ctx.send("Sheet Updated")
 
     @tasks.loop(seconds=300)
-    async def update(self, ctx):
+    async def update(self):
         now = datetime.now()
         hour = now.strftime("%H")
 
         if (int(hour) == 1 and self.executed == False):
             channel = self.client.get_channel(697768447882559548)
             await channel.send("Updating Sheet")
-            await updateContribution.saveSheet(ctx)
+            await updateContribution.saveSheet(channel)
             await channel.send("Sheet Updated")
             self.executed = True
         if (int(hour) != 1):
