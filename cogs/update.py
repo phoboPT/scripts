@@ -29,7 +29,7 @@ class Update(commands.Cog):
         await ctx.send("Sheet Updated")
 
     @tasks.loop(seconds=300)
-    async def update(self):
+    async def update(self, ctx):
         now = datetime.now()
         hour = now.strftime("%H")
 
