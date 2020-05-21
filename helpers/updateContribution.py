@@ -22,7 +22,8 @@ cell = {
     4: "H",
     5: "I",
     6: "J",
-    7: 'M'
+    7: 'M',
+    8: 'O'
 
 }
 
@@ -75,6 +76,7 @@ def calcContri():
         data['flights'] = x["flights"]
         data['fligthsAvr'] = fligthsDay
         data['contriFligth'] = contriFligth
+        data['flight'] = contriFligth
 
         allData.append(data)
     return allData
@@ -91,9 +93,13 @@ async def saveSheet(ctx):
 
         row = wks.find(player['name']).row
         index = f'{cell[1]}{row}'
-        val = wks.acell(index).value
+        totalContri = wks.acell(index).value
         index = f'{cell[7]}{row}'
-        wks.update_acell(index, val)
+        wks.update_acell(index, totalContri)
+        index = f'{cell[2]}{row}'
+        totalFlights = wks.acell(index).value
+        index = f'{cell[8]}{row}'
+        wks.update_acell(index, totalFlights)
 
         index = f'{cell[0]}{row}'
         wks.update_acell(index, player["days"])

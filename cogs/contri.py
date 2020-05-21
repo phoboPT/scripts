@@ -39,6 +39,10 @@ class Contri(commands.Cog):
             embed.add_field(name="Average Contribution",
                             value=table["avr"], inline=True)
             embed.add_field(
+                name="Yesterday Flights", value=table["flightYesterday"], inline=True)
+            embed.add_field(name="Today Flights",
+                            value=table["flightDiff"], inline=True)
+            embed.add_field(
                 name="Flights", value=table["flights"], inline=True)
             embed.add_field(name="Flights/Day",
                             value=table["fligthsAvr"], inline=True)

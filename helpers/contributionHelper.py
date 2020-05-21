@@ -37,7 +37,9 @@ def getOne(args):
         'totalReq': members["status"]["requests_remaining"],
         'place': 0,
         'diffYesterday': 0,
-        'yesterday': 0
+        'yesterday': 0,
+        'flightYesterday': 0,
+        'flightDiff': 0,
     }
 
     companyName = ''
@@ -59,11 +61,19 @@ def getOne(args):
             row = wks.find(x['company']).row
             index = f'E{row}'
             todayCont = wks.acell(index).value
-            todayValue = int(re.sub('[$,]+', '', todayCont))
+            todayContValue = int(re.sub('[$,]+', '', todayCont))
+
+            index = f'F{row}'
+            todayFlight = wks.acell(index).value
+            todayFlightValue = int(re.sub('[$,]+', '', todayFlight))
 
             index = f'N{row}'
             yesterdayCont = wks.acell(index).value
-            yesterdayValue = int(re.sub('[$,]+', '', yesterdayCont))
+            yesterdayContValue = int(re.sub('[$,]+', '', yesterdayCont))
+
+            index = f'P{row}'
+            yesterdayFlight = wks.acell(index).value
+            yesterdayFlightValue = int(re.sub(',', '', yesterdayFlight))
 
             if (int(delta2.days) < int(delta)):
                 delta = delta2.days
@@ -82,7 +92,10 @@ def getOne(args):
             data['contriFligth'] = f'$ {contriFligth}'
             data['share'] = f'$ {x["shareValue"]}'
             data['place'] = i
-            data['diffYesterday'] = f'$ {locale.format("%d", x["contributed"]-todayValue,grouping=True)}'
+            data['diffYesterday'] = f'$ {locale.format("%d", x["contributed"]-todayContValue,grouping=True)}'
             data['yesterday'] = locale.format(
-                "%d", yesterdayValue, grouping=True)
+                "%d", yesterdayContValue, grouping=True)
+            data['flightYesterday'] = locale.format(
+                "%d", yesterdayFlightValue, grouping=True)
+            data['flightDiff'] = f'{locale.format("%d", x["flights"]-yesterdayFlightValue,grouping=True)}'
     return data
