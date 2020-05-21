@@ -8,9 +8,12 @@ import gspread
 import json
 import locale
 import os
+from selenium import webdriver
 from dotenv import load_dotenv
 load_dotenv()
 
+MY_TOKEN = os.getenv("MY_TOKEN")
+MY_EMAIL = os.getenv("MY_EMAIL")
 
 AM4_TOKEN = os.getenv("AM4_API_TOKEN")
 
@@ -24,12 +27,10 @@ cell = {
     6: "J",
     7: 'M',
     8: 'O'
-
 }
 
 
 def downloadSheet():
-
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
 
@@ -86,7 +87,8 @@ async def saveSheet(ctx):
     wks = downloadSheet()
     wks = wks.worksheet("newData")
     data = calcContri()
-
+    value = getValue()
+    wks.update_acell("K72", re.sub('[$,]', '', value))
     row = ''
     for player in data:
         await ctx.send(f'updating {player["name"]}')
@@ -113,7 +115,6 @@ async def saveSheet(ctx):
         wks.update_acell(index, player["fligthsAvr"])
         index = f'{cell[5]}{row}'
         wks.update_acell(index, player["contriFligth"])
-
         time.sleep(10)
 
 
@@ -124,3 +125,22 @@ def getContributions():
         return response.text
     elif (response.status_code == 404):
         return 0
+
+
+def getValue():
+
+    options = webdriver.ChromeOptions()
+    options.add_argument("headless")
+    browser = webdriver.Chrome(options=options)
+
+    #  browser = webdriver.Chrome()
+
+    browser.get(
+        f'https://am4.pagespeedster.com/am4/?gameType=app&uid={MY_EMAIL}&uid_token={MY_TOKEN}&mail={MY_EMAIL}&mail_token={MY_TOKEN}')
+
+    browser.find_element_by_css_selector("#allianceStar").click()
+    browser.implicitly_wait(60)
+    test = browser.find_element_by_css_selector(
+        "#allianceAction > div:nth-child(1) > div > div > div > div > div.col-12.border.rounded > div.row.m-text.p-2.border.border-top-0.border-left-0.border-right-0.text-center > div:nth-child(3) > span.text-success")
+
+    return test.text
