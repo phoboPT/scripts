@@ -97,5 +97,5 @@ def getOne(args):
                 "%d", yesterdayContValue, grouping=True)
             data['flightYesterday'] = locale.format(
                 "%d", yesterdayFlightValue, grouping=True)
-            data['flightDiff'] = f'{locale.format("%d", x["flights"]-yesterdayFlightValue,grouping=True)}'
+            data['flightDiff'] = f'{locale.format("%d", x["flights"]-todayFlightValue,grouping=True)}'
     return data
