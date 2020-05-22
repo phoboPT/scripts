@@ -10,6 +10,9 @@ load_dotenv()
 MY_COOKIE = os.getenv("MY_COOKIE")
 sleepTime = 0
 
+co2PriceGlobal = 110
+fuelPriceGlobal = 340
+
 
 def getFuelData():
     return requests.get(
@@ -66,7 +69,7 @@ def buyFuel():
     if (amountToBuy < 1):
 
         print(f"Tank of Fuel full sleep for ")
-    elif (fuelPrice < 600):
+    elif (fuelPrice < fuelPriceGlobal):
         sendRequestFuel(str(amountToBuy))
 
         print(f"buy fuel at {fuelPrice} ")
@@ -94,7 +97,7 @@ def buyCo2():
     if (amountToBuy < 1):
 
         print(f"Tank of CO2 full sleep for ")
-    elif (co2Price < 140):
+    elif (co2Price < co2PriceGlobal):
         sendRequestCo2(str(amountToBuy))
 
         print(

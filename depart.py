@@ -3,11 +3,18 @@ import re
 import time
 from dotenv import load_dotenv
 import os
+from random import randrange
 load_dotenv()
 MY_TOKEN = os.getenv("MY_TOKEN")
 MY_EMAIL = os.getenv("MY_EMAIL")
+
 starttime = time.time()
-sleepTime = 100
+sleepTime = 10
+
+options = webdriver.ChromeOptions()
+options.add_argument("headless")
+browser = webdriver.Chrome(options=options)
+#  browser = webdriver.Chrome()
 
 
 def checkMarkting(browser):
@@ -95,30 +102,21 @@ def departFlights(browser):
         sleepTime = 10
 
     else:
-        sleepTime = 300
-
-
-def depart():
-    global sleepTime
-    options = webdriver.ChromeOptions()
-    options.add_argument("headless")
-    browser = webdriver.Chrome(options=options)
-
-    #  browser = webdriver.Chrome()
-
-    browser.get(
-        f'https://am4.pagespeedster.com/am4/?gameType=app&uid={MY_EMAIL}&uid_token={MY_TOKEN}&mail={MY_EMAIL}&mail_token={MY_TOKEN}')
-
-    checkMarkting(browser)
-
-    browser.close()
+        sleepTime = randrange(300, 600)
 
 
 while True:
+    teste = 0
+    if (teste == 0):
+        browser.get(
+            f'https://am4.pagespeedster.com/am4/?gameType=app&uid={MY_EMAIL}&uid_token={MY_TOKEN}&mail={MY_EMAIL}&mail_token={MY_TOKEN}')
+
     try:
-        depart()
-        print(f"wait {int(sleepTime/60)}")
+        checkMarkting(browser)
+        print(f"wait {sleepTime/60} minutes")
+        teste = 1
     except:
+        sleepTime = 100
         print("something went wrong")
 
     time.sleep(sleepTime)
