@@ -105,10 +105,10 @@ def saveSheet(fuelPrice, co2Price, today):
 
     wks = downloadSheet()
 
-    co2Sheet = wks.worksheet("CO2")
-    fuelSheet = wks.worksheet("New Fuel")
-    oldFuelSheet = wks.worksheet("OldFuel Check")
-    oldCo2Sheet = wks.worksheet("OldCO2 Check")
+    co2Sheet = wks.worksheet("V2 CO2")
+    fuelSheet = wks.worksheet("V2 Fuel")
+    oldFuelSheet = wks.worksheet("V1 Fuel")
+    oldCo2Sheet = wks.worksheet("CO2")
 
     if (hour == 23):
         index = dayToCell[date - 1] + str(index)
