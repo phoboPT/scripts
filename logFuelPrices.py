@@ -105,7 +105,7 @@ def saveSheet(fuelPrice, co2Price, today):
 
     wks = downloadSheet()
 
-    co2Sheet = wks.worksheet("V2 CO2")
+    co2Sheet = wks.worksheet("CO2Updated")
     fuelSheet = wks.worksheet("V2 Fuel")
     oldFuelSheet = wks.worksheet("V1 Fuel")
     oldCo2Sheet = wks.worksheet("CO2")
