@@ -7,11 +7,10 @@ import re
 from dotenv import load_dotenv
 import os
 load_dotenv()
+CO2_PRICE = int(os.getenv("FUEL_PRICE"))
+FUEL_PRICE = int(os.getenv("CO2_PRICE"))
 MY_COOKIE = os.getenv("MY_COOKIE")
 sleepTime = 0
-
-co2PriceGlobal = 110
-fuelPriceGlobal = 340
 
 
 def getFuelData():
@@ -67,16 +66,15 @@ def buyFuel():
         '[,]+', '', fuelInfo.find("span", id="remCapacity").text))
 
     if (amountToBuy < 1):
-
-        print(f"Tank of Fuel full sleep for ")
-    elif (fuelPrice < fuelPriceGlobal):
+        print(f"Tank of Fuel full")
+    elif (fuelPrice < FUEL_PRICE):
         sendRequestFuel(str(amountToBuy))
 
         print(f"buy fuel at {fuelPrice} ")
     else:
 
         print(
-            f"Fuel to expensive {fuelPrice} need {amountToBuy} sleep for ")
+            f"Fuel to expensive {fuelPrice} need {amountToBuy}")
 
 
 def buyCo2():
@@ -96,8 +94,8 @@ def buyCo2():
 
     if (amountToBuy < 1):
 
-        print(f"Tank of CO2 full sleep for ")
-    elif (co2Price < co2PriceGlobal):
+        print(f"Tank of CO2 full ")
+    elif (co2Price < CO2_PRICE):
         sendRequestCo2(str(amountToBuy))
 
         print(
