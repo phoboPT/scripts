@@ -122,12 +122,14 @@ def saveSheet(fuelPrice, co2Price, today):
         f"Fuel updated cell {index} with {fuelPrice}")
     fuelSheet.update_acell(index, fuelPrice)
     oldFuelSheet.update_acell(index, oldFuelPrice)
-    print(f"CO2 updated cell {index} with {co2Price} old price {oldCo2Price}")
+    print(f"CO2 updated cell {index} with {co2Price}")
     oldCo2Sheet.update_acell(index, oldCo2Price)
     co2Sheet.update_acell(index, co2Price)
 
     fuelPrice = re.sub("[$,]", "", fuelPrice)
+    oldFuelPrice = re.sub("[$,]", "", oldFuelPrice)
     co2Price = re.sub("[$,]", "", co2Price)
+    oldCo2Price = re.sub("[$,]", "", oldCo2Price)
 
     if (oldFuelPrice != fuelPrice):
         print(
