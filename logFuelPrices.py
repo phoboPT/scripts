@@ -106,8 +106,8 @@ def saveSheet(fuelPrice, co2Price, today):
     wks = downloadSheet()
 
     co2Sheet = wks.worksheet("CO2Updated")
-    fuelSheet = wks.worksheet("V2 Fuel")
-    oldFuelSheet = wks.worksheet("V1 Fuel")
+    fuelSheet = wks.worksheet("Fuel Updated")
+    oldFuelSheet = wks.worksheet("V2 Fuel")
     oldCo2Sheet = wks.worksheet("CO2")
 
     if (hour == 23):
