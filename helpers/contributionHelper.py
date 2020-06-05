@@ -6,6 +6,9 @@ import os
 import re
 from helpers import updateContribution
 from dotenv import load_dotenv
+import matplotlib.pyplot as plt
+import pandas as df
+from matplotlib import style
 load_dotenv()
 
 AM4_TOKEN = os.getenv("AM4_API_TOKEN")
@@ -74,6 +77,57 @@ def getOne(args):
             index = f'P{row}'
             yesterdayFlight = wks.acell(index).value
             yesterdayFlightValue = int(re.sub(',', '', yesterdayFlight))
+            # day1
+            index = f'Q{row}'
+            day1 = wks.acell(index).value
+            # day2
+            index = f'R{row}'
+            day2 = wks.acell(index).value
+            # day3
+            index = f'S{row}'
+            day3 = wks.acell(index).value
+            # day4
+            index = f'T{row}'
+            day4 = wks.acell(index).value
+            # day5
+            index = f'U{row}'
+            day5 = wks.acell(index).value
+            # day6
+            index = f'V{row}'
+            day6 = wks.acell(index).value
+            # day7
+            index = f'W{row}'
+            day7 = wks.acell(index).value
+
+            plt.clf()
+
+            days = {
+                "1": day1, "2": day2, "3": day3, "4": day4, "5": day5, "6": day6, "7": day7}
+
+            names = list(days.keys())
+            values = list(days.values())
+
+            fig = plt.figure()
+
+            plt.style.use('dark_background')
+            ax = plt.axes()
+
+            # zip joins x and y co  ordinates in pairs
+            for x, y in zip(names, values):
+
+                label = y
+
+                plt.annotate(label,  # this is the text
+                             (x, y),  # this is the point to label
+                             textcoords="offset points",  # how to position the text
+                             # distance from text to points (x,y)
+                             xytext=(0, 10),
+                             ha='center')  # horizontal alignment can be left, right or center
+
+            # plt.show()
+
+            plt.plot(names, values, 'o-', label='curPerform', color="r")
+            plt.savefig("online.png")
 
             if (int(delta2.days) < int(delta)):
                 delta = delta2.days
