@@ -92,7 +92,7 @@ def calcContri():
     return allData
 
 
-def saveSheet(ctx):
+async def saveSheet(ctx):
     wks = downloadSheet()
     wks = wks.worksheet("newData")
     data = calcContri()
@@ -189,4 +189,3 @@ def getValue():
         "#allianceAction > div:nth-child(1) > div > div > div > div > div.col-12.border.rounded > div.row.m-text.p-2.border.border-top-0.border-left-0.border-right-0.text-center > div:nth-child(3) > span.text-success")
     print(test.text)
     return test.text
-
