@@ -7,7 +7,7 @@ import re
 from helpers import updateContribution
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
-import pandas as df
+
 from matplotlib import style
 load_dotenv()
 
@@ -62,21 +62,8 @@ def getOne(args):
             wks = updateContribution.downloadSheet()
             wks = wks.worksheet("newData")
             row = wks.find(x['company']).row
-            index = f'E{row}'
-            todayCont = wks.acell(index).value
-            todayContValue = int(re.sub('[$,]+', '', todayCont))
 
-            index = f'F{row}'
-            todayFlight = wks.acell(index).value
-            todayFlightValue = int(re.sub('[$,]+', '', todayFlight))
-
-            index = f'N{row}'
-            yesterdayCont = wks.acell(index).value
-            yesterdayContValue = int(re.sub('[$,]+', '', yesterdayCont))
-
-            index = f'P{row}'
-            yesterdayFlight = wks.acell(index).value
-            yesterdayFlightValue = int(re.sub(',', '', yesterdayFlight))
+            # Graph
             # day1
             index = f'Q{row}'
             day1 = wks.acell(index).value
@@ -113,12 +100,12 @@ def getOne(args):
             ax = plt.axes()
 
             # zip joins x and y co  ordinates in pairs
-            for x, y in zip(names, values):
+            for y, z in zip(names, values):
 
-                label = y
+                label = z
 
                 plt.annotate(label,  # this is the text
-                             (x, y),  # this is the point to label
+                             (y, z),  # this is the point to label
                              textcoords="offset points",  # how to position the text
                              # distance from text to points (x,y)
                              xytext=(0, 10),
@@ -129,14 +116,31 @@ def getOne(args):
             plt.plot(names, values, 'o-', label='curPerform', color="r")
             plt.savefig("online.png")
 
+            print("1")
+
+            index = f'P{row}'
+            yesterdayFlight = wks.acell(index).value
+            yesterdayFlightValue = int(re.sub(',', '', yesterdayFlight))
+            index = f'E{row}'
+            todayCont = wks.acell(index).value
+            todayContValue = int(re.sub('[$,]+', '', todayCont))
+
+            index = f'F{row}'
+            todayFlight = wks.acell(index).value
+            todayFlightValue = int(re.sub('[$,]+', '', todayFlight))
+
+            index = f'N{row}'
+            yesterdayCont = wks.acell(index).value
+            yesterdayContValue = int(re.sub('[$,]+', '', yesterdayCont))
+
             if (int(delta2.days) < int(delta)):
                 delta = delta2.days
 
+            print(x["contributed"])
             contriDay = round(
                 x["contributed"] / delta, 2)
             fligthsDay = int(x["flights"] / delta)
             contriFligth = round(x['contributed']/x['flights'], 2)
-
             data["name"] = x["company"]
             data["days"] = delta
             data["total"] = f'$ {locale.format("%d", x["contributed"],grouping=True)}'
