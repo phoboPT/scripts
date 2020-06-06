@@ -91,7 +91,8 @@ def calcContri():
         allData.append(data)
     return allData
 
-def saveSheet(ctx):
+
+async def saveSheet(ctx):
     wks = downloadSheet()
     wks = wks.worksheet("newData")
     data = calcContri()
@@ -99,7 +100,7 @@ def saveSheet(ctx):
     wks.update_acell("K72", re.sub('[$,]', '', value))
     row = ''
     for player in data:
-       # await ctx.send(f'updating {player["name"]}')
+        await ctx.send(f'updating {player["name"]}')
         row = wks.find(player['name']).row
         # day 1 update
         index = f'{cell[12]}{row}'
@@ -188,6 +189,3 @@ def getValue():
         "#allianceAction > div:nth-child(1) > div > div > div > div > div.col-12.border.rounded > div.row.m-text.p-2.border.border-top-0.border-left-0.border-right-0.text-center > div:nth-child(3) > span.text-success")
 
     return test.text
-
-
-saveSheet(2)
