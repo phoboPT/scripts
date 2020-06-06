@@ -91,8 +91,7 @@ def calcContri():
         allData.append(data)
     return allData
 
-
-async def saveSheet(ctx):
+def saveSheet(ctx):
     wks = downloadSheet()
     wks = wks.worksheet("newData")
     data = calcContri()
@@ -100,42 +99,42 @@ async def saveSheet(ctx):
     wks.update_acell("K72", re.sub('[$,]', '', value))
     row = ''
     for player in data:
-        await ctx.send(f'updating {player["name"]}')
+       # await ctx.send(f'updating {player["name"]}')
         row = wks.find(player['name']).row
         # day 1 update
-        index = f'{cell[11]}{row}'
-        day = wks.acell(index).value
-        index = f'{cell[10]}{row}'
-        wks.update_acell(index, day)
-        # day 2 update
         index = f'{cell[12]}{row}'
         day = wks.acell(index).value
         index = f'{cell[11]}{row}'
         wks.update_acell(index, day)
-        # day 3 update
+        # day 2 update
         index = f'{cell[13]}{row}'
         day = wks.acell(index).value
         index = f'{cell[12]}{row}'
         wks.update_acell(index, day)
-        # day 4 update
+        # day 3 update
         index = f'{cell[14]}{row}'
         day = wks.acell(index).value
         index = f'{cell[13]}{row}'
         wks.update_acell(index, day)
-        # day 5 update
+        # day 4 update
         index = f'{cell[15]}{row}'
         day = wks.acell(index).value
         index = f'{cell[14]}{row}'
         wks.update_acell(index, day)
-        # day 6 update
+        # day 5 update
         index = f'{cell[16]}{row}'
         day = wks.acell(index).value
         index = f'{cell[15]}{row}'
+        wks.update_acell(index, day)
+        # day 6 update
+        index = f'{cell[17]}{row}'
+        day = wks.acell(index).value
+        index = f'{cell[16]}{row}'
         wks.update_acell(index, day)
         # day 7 update
         index = f'{cell[9]}{row}'
         day = wks.acell(index).value
-        index = f'{cell[16]}{row}'
+        index = f'{cell[17]}{row}'
         wks.update_acell(index, day)
 
         index = f'{cell[1]}{row}'
@@ -160,7 +159,7 @@ async def saveSheet(ctx):
         wks.update_acell(index, player["fligthsAvr"])
         index = f'{cell[5]}{row}'
         wks.update_acell(index, player["contriFligth"])
-        time.sleep(10)
+        time.sleep(15)
 
 
 def getContributions():
@@ -187,5 +186,8 @@ def getValue():
     browser.implicitly_wait(60)
     test = browser.find_element_by_css_selector(
         "#allianceAction > div:nth-child(1) > div > div > div > div > div.col-12.border.rounded > div.row.m-text.p-2.border.border-top-0.border-left-0.border-right-0.text-center > div:nth-child(3) > span.text-success")
-    print(test.text)
+
     return test.text
+
+
+saveSheet(2)
