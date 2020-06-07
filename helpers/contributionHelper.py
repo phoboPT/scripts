@@ -115,8 +115,7 @@ def getOne(args):
 
             plt.plot(names, values, 'o-', label='curPerform', color="r")
             plt.savefig("online.png")
-
-            print("1")
+            plt.close(fig=fig)
 
             index = f'P{row}'
             yesterdayFlight = wks.acell(index).value
