@@ -65,25 +65,25 @@ def getOne(args):
 
             # Graph
             # day1
-            index = f'Q{row}'
+            index = f'R{row}'
             day1 = wks.acell(index).value
             # day2
-            index = f'R{row}'
+            index = f'S{row}'
             day2 = wks.acell(index).value
             # day3
-            index = f'S{row}'
+            index = f'T{row}'
             day3 = wks.acell(index).value
             # day4
-            index = f'T{row}'
+            index = f'U{row}'
             day4 = wks.acell(index).value
             # day5
-            index = f'U{row}'
+            index = f'V{row}'
             day5 = wks.acell(index).value
             # day6
-            index = f'V{row}'
+            index = f'W{row}'
             day6 = wks.acell(index).value
             # day7
-            index = f'W{row}'
+            index = f'X{row}'
             day7 = wks.acell(index).value
 
             plt.clf()
