@@ -1,5 +1,5 @@
 from discord.ext import commands
-from discord import Embed
+import discord
 from helpers import contributionHelper
 
 
@@ -19,10 +19,10 @@ class Contri(commands.Cog):
             await ctx.send("You are missing some arguments, use !contri <Name>")
         else:
             table = contributionHelper.getOne(args)
-
+            f = discord.File("online.png", filename="online.png")
             user = self.client.get_user(ctx.author.id)
-            embed = Embed(title="Contribution Status",
-                          description=table["name"], color=0xff0000)
+            embed = discord.Embed(title="Contribution Status",
+                                  description=table["name"], color=0xff0000)
             embed.set_author(name=ctx.author,  icon_url=user.avatar_url)
             embed.set_thumbnail(
                 url="https://image.flaticon.com/icons/png/512/172/172175.png")
@@ -50,9 +50,12 @@ class Contri(commands.Cog):
                             value=table["contriFligth"], inline=True)
             embed.add_field(name="Share",
                             value=table["share"], inline=True)
+            embed.set_image(url=f'''attachment://online.png''')
+
             embed.set_footer(
                 text=f'Data updated live from the AM4 API; requests remaining: {table["totalReq"]}\nCreated by Phobo Inc')
-            await ctx.send(embed=embed)
+            await ctx.send(file=f, embed=embed)
+
         print(f'{ctx.author} called the contribution helper')
 
 
