@@ -2,6 +2,7 @@ import json
 import discord
 from discord.ext import commands
 import os
+from helpers import isAdmin
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -10,11 +11,13 @@ bot = commands.Bot(command_prefix='!')
 
 
 @bot.command()
+@commands.check(isAdmin.isAdmin)
 async def load(ctx, extension):
     bot.load_extension(f'cogs.{extension}')
 
 
 @bot.command()
+@commands.check(isAdmin.isAdmin)
 async def unload(ctx, extension):
     bot.unload_extension(f'cogs.{extension}')
 
