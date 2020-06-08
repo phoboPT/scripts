@@ -14,6 +14,7 @@ class FuelMessenger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
+        print("hi")
         self.sendFuel.start()
 
     def cog_unload(self):
@@ -39,12 +40,10 @@ class FuelMessenger(commands.Cog):
         # myid = '<@&698179530711629854>'
         # price['fuelPrice'] = 400
         # price['co2Price'] = 120
-        string = ""
+        string = f"{myid}"
         if (price['fuelPrice'] <= self.maxFuelPrice):
             string = f'Fuel Price {price["fuelPrice"]}$'
             send = 1
-            if (price['fuelPrice'] <= self.minFuelPrice):
-                string = f'{myid} {string}'
 
         if (price['co2Price'] <= self.maxCo2Price):
             string = string+f' CO2 Price {price["co2Price"]}$'
