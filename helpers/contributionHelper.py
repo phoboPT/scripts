@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import locale
 import os
 import re
-import updateContribution
+from helpers import updateContribution
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 
@@ -24,7 +24,7 @@ def contributionReq():
         return 0
 
 
-def getOne(args):
+async def getOne(args):
     now = datetime.now()
     members = json.loads(contributionReq())
     resetDate = datetime(2020, 3, 16)
@@ -45,11 +45,11 @@ def getOne(args):
         'flightDiff': 0,
     }
 
-    companyName = 'Phobo Inc'
-    # if (len(args) == 1):
-    #     companyName = args[0]
-    # if (len(args) > 1):
-    #     companyName = f'{args[0]} {args[1]}'
+    companyName = ''
+    if (len(args) == 1):
+        companyName = args[0]
+    if (len(args) > 1):
+        companyName = f'{args[0]} {args[1]}'
 
     i = 0
     for x in members["members"]:
@@ -133,30 +133,27 @@ def getOne(args):
             yesterdayCont = wks.acell(index).value
             yesterdayContValue = int(re.sub('[$,]+', '', yesterdayCont))
 
-            # if (int(delta2.days) < int(delta)):
-            #     delta = delta2.days
+            if (int(delta2.days) < int(delta)):
+                delta = delta2.days
 
-            # print(x["contributed"])
-            # contriDay = round(
-            #     x["contributed"] / delta, 2)
-            # fligthsDay = int(x["flights"] / delta)
-            # contriFligth = round(x['contributed']/x['flights'], 2)
-            # data["name"] = x["company"]
-            # data["days"] = delta
-            # data["total"] = f'$ {locale.format("%d", x["contributed"],grouping=True)}'
-            # data['avr'] = f'$ {locale.format("%d", contriDay, grouping=True)}'
-            # data['flights'] = locale.format("%d",  x["flights"], grouping=True)
-            # data['fligthsAvr'] = locale.format("%d", fligthsDay, grouping=True)
-            # data['contriFligth'] = f'$ {contriFligth}'
-            # data['share'] = f'$ {x["shareValue"]}'
-            # data['place'] = i
-            # data['diffYesterday'] = f'$ {locale.format("%d", x["contributed"]-todayContValue,grouping=True)}'
-            # data['yesterday'] = locale.format(
-            #     "%d", yesterdayContValue, grouping=True)
-            # data['flightYesterday'] = locale.format(
-            #     "%d", yesterdayFlightValue, grouping=True)
-            # data['flightDiff'] = f'{locale.format("%d", x["flights"]-todayFlightValue,grouping=True)}'
+            print(x["contributed"])
+            contriDay = round(
+                x["contributed"] / delta, 2)
+            fligthsDay = int(x["flights"] / delta)
+            contriFligth = round(x['contributed']/x['flights'], 2)
+            data["name"] = x["company"]
+            data["days"] = delta
+            data["total"] = f'$ {locale.format("%d", x["contributed"],grouping=True)}'
+            data['avr'] = f'$ {locale.format("%d", contriDay, grouping=True)}'
+            data['flights'] = locale.format("%d",  x["flights"], grouping=True)
+            data['fligthsAvr'] = locale.format("%d", fligthsDay, grouping=True)
+            data['contriFligth'] = f'$ {contriFligth}'
+            data['share'] = f'$ {x["shareValue"]}'
+            data['place'] = i
+            data['diffYesterday'] = f'$ {locale.format("%d", x["contributed"]-todayContValue,grouping=True)}'
+            data['yesterday'] = locale.format(
+                "%d", yesterdayContValue, grouping=True)
+            data['flightYesterday'] = locale.format(
+                "%d", yesterdayFlightValue, grouping=True)
+            data['flightDiff'] = f'{locale.format("%d", x["flights"]-todayFlightValue,grouping=True)}'
     return data
-
-
-getOne("Phobo Inc")
