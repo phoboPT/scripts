@@ -18,7 +18,7 @@ class Contri(commands.Cog):
         if (len(args) == 0):
             await ctx.send("You are missing some arguments, use !contri <Name>")
         else:
-            table = contributionHelper.getOne(args)
+            table = await contributionHelper.getOne(args)
             f = discord.File("online.png", filename="online.png")
             user = self.client.get_user(ctx.author.id)
             embed = discord.Embed(title="Contribution Status",
