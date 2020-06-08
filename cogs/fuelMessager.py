@@ -42,7 +42,7 @@ class FuelMessenger(commands.Cog):
         # price['co2Price'] = 120
         string = f"{myid}"
         if (price['fuelPrice'] <= self.maxFuelPrice):
-            string = f'Fuel Price {price["fuelPrice"]}$'
+            string+f'Fuel Price {price["fuelPrice"]}$'
             send = 1
 
         if (price['co2Price'] <= self.maxCo2Price):
