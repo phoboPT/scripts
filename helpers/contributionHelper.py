@@ -85,15 +85,38 @@ async def getOne(args):
             index = f'X{row}'
             day7 = wks.acell(index).value
 
+            day1 = int(re.sub('[,]+', '', day1))
+            day2 = int(re.sub('[,]+', '', day2))
+            day3 = int(re.sub('[,]+', '', day3))
+            day4 = int(re.sub('[,]+', '', day4))
+            day5 = int(re.sub('[,]+', '', day5))
+            day6 = int(re.sub('[,]+', '', day6))
+            day7 = int(re.sub('[,]+', '', day7))
+
             plt.clf()
 
-            days = {
-                "1": day1, "2": day2, "3": day3, "4": day4, "5": day5, "6": day6, "7": day7}
-
+            days = {"1": day1, "2": day2, "3": day3,
+                    "4": day4, "5": day5, "6": day6, "7": day7}
             names = list(days.keys())
             values = list(days.values())
-
             yAxys = sorted(values)
+
+            # yAxys[6] += 2000
+            yAxys[0] = f'{locale.format("%d", yAxys[0],grouping=True)}'
+            yAxys[1] = f'{locale.format("%d", yAxys[1],grouping=True)}'
+            yAxys[2] = f'{locale.format("%d", yAxys[2],grouping=True)}'
+            yAxys[3] = f'{locale.format("%d", yAxys[3],grouping=True)}'
+            yAxys[4] = f'{locale.format("%d", yAxys[4],grouping=True)}'
+            yAxys[5] = f'{locale.format("%d", yAxys[5],grouping=True)}'
+            yAxys[6] = f'{locale.format("%d", yAxys[6],grouping=True)}'
+
+            values[0] = f'{locale.format("%d", values[0],grouping=True)}'
+            values[1] = f'{locale.format("%d", values[1],grouping=True)}'
+            values[2] = f'{locale.format("%d", values[2],grouping=True)}'
+            values[3] = f'{locale.format("%d", values[3],grouping=True)}'
+            values[4] = f'{locale.format("%d", values[4],grouping=True)}'
+            values[5] = f'{locale.format("%d", values[5],grouping=True)}'
+            values[6] = f'{locale.format("%d", values[6],grouping=True)}'
 
             fig = plt.figure()
 
@@ -103,9 +126,7 @@ async def getOne(args):
 
             # zip joins x and y co  ordinates in pairs
             for y, z in zip(names, values):
-
                 label = z
-
                 plt.annotate(label,  # this is the text
                              (y, z),  # this is the point to label
                              textcoords="offset points",  # how to position the text
