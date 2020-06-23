@@ -28,7 +28,8 @@ class Contri(commands.Cog):
                 url="https://image.flaticon.com/icons/png/512/172/172175.png")
             embed.add_field(name="Company name",
                             value=table["name"], inline=False)
-            # embed.add_field(name="#", value=table["place"], inline=True)
+            embed.add_field(name="7 Days Sum",
+                            value=table["place"], inline=True)
             embed.add_field(name="Days", value=table["days"], inline=True)
             embed.add_field(name="Total Contribution",
                             value=table["total"], inline=True)
@@ -36,18 +37,20 @@ class Contri(commands.Cog):
                             value=table["yesterday"], inline=True)
             embed.add_field(name="Today Contribution",
                             value=table["diffYesterday"], inline=True)
-            embed.add_field(name="7 Days Sum",
+            embed.add_field(name="Average Controbution",
                             value=table["avr"], inline=True)
-            # embed.add_field(
-            #     name="Yesterday Flights", value=table["flightYesterday"], inline=True)
-            # embed.add_field(name="Today Flights",
-            #                 value=table["flightDiff"], inline=True)
-            # embed.add_field(
-            #     name="Flights", value=table["flights"], inline=True)
-            # embed.add_field(name="Flights/Day",
-            #                 value=table["fligthsAvr"], inline=True)
-            # embed.add_field(name="Contribution/Flight",
-            #                 value=table["contriFligth"], inline=True)
+            embed.add_field(
+                name="Yesterday Flights", value=table["flightYesterday"], inline=True)
+            embed.add_field(name="Today Flights",
+                            value=table["flightDiff"], inline=True)
+            embed.add_field(
+                name="Flights", value=table["flights"], inline=True)
+            embed.add_field(name="Flights/Day",
+                            value=table["fligthsAvr"], inline=True)
+            embed.add_field(name="Contribution/Flight",
+                            value=table["contriFligth"], inline=True)
+            embed.add_field(name="7 Days Sum",
+                            value=table["place"], inline=True)
             embed.add_field(name="Share",
                             value=table["share"], inline=True)
             embed.set_image(url=f'''attachment://online.png''')

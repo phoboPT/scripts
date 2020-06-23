@@ -174,12 +174,12 @@ async def getOne(args):
             data["name"] = x["company"]
             data["days"] = delta
             data["total"] = f'$ {locale.format("%d", x["contributed"],grouping=True)}'
-            data['avr'] = f'$ {locale.format("%d", total, grouping=True)}'
-            #data['flights'] = locale.format("%d",  x["flights"], grouping=True)
-            #data['fligthsAvr'] = locale.format("%d", fligthsDay, grouping=True)
-            #data['contriFligth'] = f'$ {contriFligth}'
+            data['avr'] = f'$ {locale.format("%d", contriDay, grouping=True)}'
+            data['flights'] = locale.format("%d",  x["flights"], grouping=True)
+            data['fligthsAvr'] = locale.format("%d", fligthsDay, grouping=True)
+            data['contriFligth'] = f'$ {contriFligth}'
             data['share'] = f'$ {x["shareValue"]}'
-           # data['place'] = i
+            data['place'] = f'$ {locale.format("%d", total, grouping=True)}'
             data['diffYesterday'] = f'$ {locale.format("%d", x["contributed"]-todayContValue,grouping=True)}'
             data['yesterday'] = locale.format(
                 "%d", yesterdayContValue, grouping=True)
