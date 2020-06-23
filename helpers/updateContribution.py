@@ -135,6 +135,12 @@ async def saveSheet(ctx):
         # day 7 update
         index = f'{cell[9]}{row}'
         day = wks.acell(index).value
+
+        recrutmentId = "<@698469562915487784>"
+        retentionId = "<@698469562915487784>"
+        if (int(day) <= 0):
+            await ctx.send(f'The contribution for {player["name"]} is {day} {recrutmentId}{retentionId}')
+
         index = f'{cell[17]}{row}'
         wks.update_acell(index, day)
 
