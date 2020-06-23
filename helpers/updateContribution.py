@@ -92,7 +92,7 @@ def calcContri():
     return allData
 
 
-async def saveSheet(ctx):
+async def saveSheet(ctx, channel):
     wks = downloadSheet()
     wks = wks.worksheet("newData")
     data = calcContri()
@@ -136,10 +136,15 @@ async def saveSheet(ctx):
         index = f'{cell[9]}{row}'
         day = wks.acell(index).value
 
-        recrutmentId = "<@698469562915487784>"
-        retentionId = "<@698469562915487784>"
+        roleId = '<@&725037141138210878>'
+
+        string = f"{roleId} "
+        string = string+f"The contribution for {player['name']} is {day} "
+
+        day = re.sub('[$,]', '', day)
+
         if (int(day) <= 0):
-            await ctx.send(f'The contribution for {player["name"]} is {day} {recrutmentId}{retentionId}')
+            await channel.send(string)
 
         index = f'{cell[17]}{row}'
         wks.update_acell(index, day)

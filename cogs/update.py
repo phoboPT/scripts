@@ -23,9 +23,10 @@ class Update(commands.Cog):
     @commands.command(name="update", help='Contribution Sheet updater', description='Im a Contribution updater, call me and i will update the sheet')
     @commands.check(isAdmin.isAdmin)
     async def updateSheet(self, ctx):
+        channel = self.client.get_channel(725038386208833576)
         print(f' called the update')
-        await ctx.send("Updating Sheet")
-        await updateContribution.saveSheet(ctx)
+        await ctx.send(f"Updating Sheet ")
+        await updateContribution.saveSheet(ctx, channel)
         await ctx.send("Sheet Updated")
 
     @tasks.loop(seconds=300)
@@ -35,8 +36,9 @@ class Update(commands.Cog):
 
         if (int(hour) == 1 and self.executed == False):
             channel = self.client.get_channel(697768447882559548)
+            channel2 = self.client.get_channel(725038386208833576)
             await channel.send("Updating Sheet")
-            await updateContribution.saveSheet(channel)
+            await updateContribution.saveSheet(channel, channel2)
             await channel.send("Sheet Updated")
             self.executed = True
         if (int(hour) != 1):
