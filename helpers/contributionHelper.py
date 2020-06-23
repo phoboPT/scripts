@@ -84,6 +84,9 @@ async def getOne(args):
             # day7
             index = f'X{row}'
             day7 = wks.acell(index).value
+            # yesterday
+            index = f'N{row}'
+            day8 = wks.acell(index).value
 
             day1 = int(re.sub('[,]+', '', day1))
             day2 = int(re.sub('[,]+', '', day2))
@@ -92,11 +95,15 @@ async def getOne(args):
             day5 = int(re.sub('[,]+', '', day5))
             day6 = int(re.sub('[,]+', '', day6))
             day7 = int(re.sub('[,]+', '', day7))
+            day8 = int(re.sub('[$,]+', '', day8))
 
+            total = day2+day3+day4+day5+day6+day7+day8
+            print(day8)
             plt.clf()
 
             days = {"1": day1, "2": day2, "3": day3,
-                    "4": day4, "5": day5, "6": day6, "7": day7}
+                    "4": day4, "5": day5, "6": day6, "7": day7, "8": day8}
+
             names = list(days.keys())
             values = list(days.values())
             yAxys = sorted(values)
@@ -109,6 +116,7 @@ async def getOne(args):
             yAxys[4] = f'{locale.format("%d", yAxys[4],grouping=True)}'
             yAxys[5] = f'{locale.format("%d", yAxys[5],grouping=True)}'
             yAxys[6] = f'{locale.format("%d", yAxys[6],grouping=True)}'
+            yAxys[7] = f'{locale.format("%d", yAxys[7],grouping=True)}'
 
             values[0] = f'{locale.format("%d", values[0],grouping=True)}'
             values[1] = f'{locale.format("%d", values[1],grouping=True)}'
@@ -117,12 +125,13 @@ async def getOne(args):
             values[4] = f'{locale.format("%d", values[4],grouping=True)}'
             values[5] = f'{locale.format("%d", values[5],grouping=True)}'
             values[6] = f'{locale.format("%d", values[6],grouping=True)}'
+            values[7] = f'{locale.format("%d", values[7],grouping=True)}'
 
             fig = plt.figure()
 
             plt.style.use('dark_background')
             ax = plt.axes()
-            ax.plot([0, 0, 0, 0, 0, 0, 0], yAxys, color="black")
+            ax.plot([0, 0, 0, 0, 0, 0, 0, 0], yAxys, color="black")
 
             # zip joins x and y co  ordinates in pairs
             for y, z in zip(names, values):
@@ -165,12 +174,12 @@ async def getOne(args):
             data["name"] = x["company"]
             data["days"] = delta
             data["total"] = f'$ {locale.format("%d", x["contributed"],grouping=True)}'
-            data['avr'] = f'$ {locale.format("%d", contriDay, grouping=True)}'
-            data['flights'] = locale.format("%d",  x["flights"], grouping=True)
-            data['fligthsAvr'] = locale.format("%d", fligthsDay, grouping=True)
-            data['contriFligth'] = f'$ {contriFligth}'
+            data['avr'] = f'$ {locale.format("%d", total, grouping=True)}'
+            #data['flights'] = locale.format("%d",  x["flights"], grouping=True)
+            #data['fligthsAvr'] = locale.format("%d", fligthsDay, grouping=True)
+            #data['contriFligth'] = f'$ {contriFligth}'
             data['share'] = f'$ {x["shareValue"]}'
-            data['place'] = i
+           # data['place'] = i
             data['diffYesterday'] = f'$ {locale.format("%d", x["contributed"]-todayContValue,grouping=True)}'
             data['yesterday'] = locale.format(
                 "%d", yesterdayContValue, grouping=True)

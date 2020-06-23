@@ -36,18 +36,18 @@ class Contri(commands.Cog):
                             value=table["yesterday"], inline=True)
             embed.add_field(name="Today Contribution",
                             value=table["diffYesterday"], inline=True)
-            embed.add_field(name="Average Contribution",
+            embed.add_field(name="7 Days Sum",
                             value=table["avr"], inline=True)
-            embed.add_field(
-                name="Yesterday Flights", value=table["flightYesterday"], inline=True)
-            embed.add_field(name="Today Flights",
-                            value=table["flightDiff"], inline=True)
-            embed.add_field(
-                name="Flights", value=table["flights"], inline=True)
-            embed.add_field(name="Flights/Day",
-                            value=table["fligthsAvr"], inline=True)
-            embed.add_field(name="Contribution/Flight",
-                            value=table["contriFligth"], inline=True)
+            # embed.add_field(
+            #     name="Yesterday Flights", value=table["flightYesterday"], inline=True)
+            # embed.add_field(name="Today Flights",
+            #                 value=table["flightDiff"], inline=True)
+            # embed.add_field(
+            #     name="Flights", value=table["flights"], inline=True)
+            # embed.add_field(name="Flights/Day",
+            #                 value=table["fligthsAvr"], inline=True)
+            # embed.add_field(name="Contribution/Flight",
+            #                 value=table["contriFligth"], inline=True)
             embed.add_field(name="Share",
                             value=table["share"], inline=True)
             embed.set_image(url=f'''attachment://online.png''')
