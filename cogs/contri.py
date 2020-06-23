@@ -28,8 +28,7 @@ class Contri(commands.Cog):
                 url="https://image.flaticon.com/icons/png/512/172/172175.png")
             embed.add_field(name="Company name",
                             value=table["name"], inline=False)
-            embed.add_field(name="7 Days Sum",
-                            value=table["place"], inline=True)
+
             embed.add_field(name="Days", value=table["days"], inline=True)
             embed.add_field(name="Total Contribution",
                             value=table["total"], inline=True)
