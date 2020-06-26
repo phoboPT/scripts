@@ -46,16 +46,17 @@ async def getOne(args):
         'flightDiff': 0,
     }
 
+    companyName = ''
     if (len(args) == 1):
         companyName = args[0]
     if (len(args) > 1):
         companyName = f'{args[0]} {args[1]}'
 
-    companyName = ''
     i = 0
     for x in members["members"]:
         i = i+1
         if (companyName.lower() in x["company"].lower()):
+            print("HU")
             delta = int((now - resetDate).days)
             delta2 = now - datetime.fromtimestamp(x['joined'])
 
@@ -99,7 +100,6 @@ async def getOne(args):
             day8 = int(re.sub('[$,]+', '', day8))
 
             total = day2+day3+day4+day5+day6+day7+day8
-            print(day8)
             plt.clf()
 
             days = {"1": day1, "2": day2, "3": day3,
