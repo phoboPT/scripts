@@ -1,16 +1,26 @@
+import mysql.connector
 import requests
 import json
 from datetime import datetime, timedelta
 import locale
 import os
 import re
-#import updateContribution
-from helpers import updateContribution
+
+
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 
 from matplotlib import style
 load_dotenv()
+
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="1234",
+    database="jet2Data"
+)
+mycursor = mydb.cursor()
 
 AM4_TOKEN = os.getenv("AM4_API_TOKEN")
 locale.setlocale(locale.LC_ALL, 'en_US.utf8')
@@ -54,15 +64,21 @@ async def getOne(args):
 
     i = 0
     for x in members["members"]:
+
         i = i+1
         if (companyName.lower() in x["company"].lower()):
-            print("HU")
+            selectCompany = f"SELECT * FROM members WHERE company ='{x['company']}'"
+            companyContrtibution = f"SELECT * FROM contribution WHERE companyID= "
+            mycursor.execute(selectCompany)
+            result = mycursor.fetchall()
+            companyID = result[0][0]
+            companyContrtibution = f"SELECT * FROM contribution WHERE companyID= {companyID} AND data > '2020-07-13 22:05'"
+            mycursor.execute(companyContrtibution)
+            result = mycursor.fetchall()
+            print(result)
+
             delta = int((now - resetDate).days)
             delta2 = now - datetime.fromtimestamp(x['joined'])
-
-            wks = updateContribution.downloadSheet()
-            wks = wks.worksheet("newData")
-            row = wks.find(x['company']).row
 
             # Graph
             # day1
