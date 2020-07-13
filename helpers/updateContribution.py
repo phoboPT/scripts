@@ -2,53 +2,23 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import re
-from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime, timedelta
-import gspread
 import json
 import locale
 import os
-from selenium import webdriver
+import mysql.connector
 from dotenv import load_dotenv
-load_dotenv()
 
-MY_TOKEN = os.getenv("MY_TOKEN")
-MY_EMAIL = os.getenv("MY_EMAIL")
+load_dotenv()
 AM4_TOKEN = os.getenv("AM4_API_TOKEN")
 
-cell = {
-    0: 'D',
-    1: "E",
-    2: "F",
-    3: "G",
-    4: "H",
-    5: "I",
-    6: "J",
-    7: 'M',
-    8: 'O',
-    9: 'N',
-    10: 'Q',
-    11: 'R',
-    12: 'S',
-    13: 'T',
-    14: 'U',
-    15: 'V',
-    16: 'W',
-    17: 'X',
-    18: 'Y'
-}
-
-
-def downloadSheet():
-    scope = ['https://spreadsheets.google.com/feeds',
-             'https://www.googleapis.com/auth/drive']
-
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(
-        'fueldata.json', scope)
-
-    gc = gspread.authorize(credentials)
-
-    return gc.open("Jet 2 Alliance Members Data")
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="1234",
+    database="jet2Data"
+)
+mycursor = mydb.cursor()
 
 
 def calcContri():
@@ -62,10 +32,9 @@ def calcContri():
             "name": "",
             "days": "",
             'total': '',
-            'avr': '',
-            'flights': '',
-            'fligthsAvr': '',
-            'contriFligth': '',
+            'flights': x['flights'],
+            'dailyContribution': x["dailyContribution"],
+            'shareValue': x["shareValue"]
         }
 
         delta = int((now - resetDate).days)
@@ -74,104 +43,56 @@ def calcContri():
 
         if (int(delta2.days) < int(delta)):
             delta = delta2.days
-        contriDay = round(
-            x["contributed"] / delta if delta != 0 else 1, 2)
-        fligthsDay = int(x["flights"] / delta if delta != 0 else 1)
-        contriFligth = round(x['contributed']/x['flights'], 2)
 
         data["name"] = x["company"]
         data["days"] = delta
+        data["joined"] = x["joined"]
         data["total"] = x["contributed"]
-        data['avr'] = contriDay
-        data['flights'] = x["flights"]
-        data['fligthsAvr'] = fligthsDay
-        data['contriFligth'] = contriFligth
-        data['flight'] = contriFligth
 
         allData.append(data)
     return allData
 
 
 async def saveSheet(ctx, channel):
-    wks = downloadSheet()
-    wks = wks.worksheet("newData")
+
     data = calcContri()
-    # value = getValue()
-    # wks.update_acell("K72", re.sub('[$,]', '', value))
-    row = ''
+
     for player in data:
         await ctx.send(f'updating {player["name"]}')
-        row = wks.find(player['name']).row
-        # day 1 update
-        index = f'{cell[12]}{row}'
-        day = wks.acell(index).value
-        index = f'{cell[11]}{row}'
-        wks.update_acell(index, day)
-        # day 2 update
-        index = f'{cell[13]}{row}'
-        day = wks.acell(index).value
-        index = f'{cell[12]}{row}'
-        wks.update_acell(index, day)
-        # day 3 update
-        index = f'{cell[14]}{row}'
-        day = wks.acell(index).value
-        index = f'{cell[13]}{row}'
-        wks.update_acell(index, day)
-        # day 4 update
-        index = f'{cell[15]}{row}'
-        day = wks.acell(index).value
-        index = f'{cell[14]}{row}'
-        wks.update_acell(index, day)
-        # day 5 update
-        index = f'{cell[16]}{row}'
-        day = wks.acell(index).value
-        index = f'{cell[15]}{row}'
-        wks.update_acell(index, day)
-        # day 6 update
-        index = f'{cell[17]}{row}'
-        day = wks.acell(index).value
-        index = f'{cell[16]}{row}'
-        wks.update_acell(index, day)
-        # day 7 update
-        index = f'{cell[9]}{row}'
-        day = wks.acell(index).value
 
-        roleId = '<@&725037141138210878>'
+        newUser = (player['name'], player['joined'], player['days'])
+        newContribution = (player['total'])
+        sqlInsertNewMember = "INSERT INTO members(company, joined,days)VALUES(%s,%s,%s)"
+        sqlInsertNewContribution = "INSERT INTO contribution(companyID, contributed,dailyContribution)VALUES(%s,%s,%s)"
+        sqlInsertNewFlight = "INSERT INTO flights(companyID, flights)VALUES(%s,%s)"
+        sqlInsertNewShare = "INSERT INTO shares(companyID, shareValue)VALUES(%s,%s)"
 
-        string = f"{roleId} "
-        string = string+f"The contribution for {player['name']} is {day} "
+        selectData = f"SELECT * FROM members WHERE company ='{player['name']}'"
 
-        day = re.sub('[$,]', '', day)
+        mycursor.execute(selectData)
+        result = mycursor.fetchall()
+        if len(result) == 0:
+            mycursor.execute(sqlInsertNewMember, newUser)
+            mycursor.execute(selectData)
+            result = mycursor.fetchall()
 
-        if (int(day) <= 0):
-            await channel.send(string)
+        newContribution = (result[0][0], player['total'],
+                           player['dailyContribution'])
+        newFlight = (result[0][0], player['flights'])
+        newShare = (result[0][0], player['shareValue'])
+        mycursor.execute(sqlInsertNewContribution, newContribution)
+        mycursor.execute(sqlInsertNewFlight, newFlight)
+        mycursor.execute(sqlInsertNewShare, newShare)
+        mydb.commit()
+        # roleId = '<@&725037141138210878>'
 
-        index = f'{cell[17]}{row}'
-        wks.update_acell(index, day)
+        # string = f"{roleId} "
+        # string = string+f"The contribution for {player['name']} is {day} "
 
-        index = f'{cell[1]}{row}'
-        totalContri = wks.acell(index).value
-        index = f'{cell[7]}{row}'
-        wks.update_acell(index, totalContri)
+        # day = re.sub('[$,]', '', day)
 
-        index = f'{cell[2]}{row}'
-        totalFlights = wks.acell(index).value
-        index = f'{cell[8]}{row}'
-        wks.update_acell(index, totalFlights)
-
-        index = f'{cell[0]}{row}'
-        wks.update_acell(index, player["days"])
-        index = f'{cell[1]}{row}'
-        wks.update_acell(index, player["total"])
-        index = f'{cell[2]}{row}'
-        wks.update_acell(index, player["flights"])
-        index = f'{cell[3]}{row}'
-        wks.update_acell(index, player["avr"])
-        index = f'{cell[4]}{row}'
-        wks.update_acell(index, player["fligthsAvr"])
-        index = f'{cell[5]}{row}'
-        wks.update_acell(index, player["contriFligth"])
-        time.sleep(15)
+        # if (int(day) <= 0):
+        #     await channel.send(string)
 
 
 def getContributions():
@@ -181,3 +102,6 @@ def getContributions():
         return response.text
     elif (response.status_code == 404):
         return 0
+
+
+# saveSheet()
