@@ -1,0 +1,15 @@
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="1234",
+    database="jet2Data"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("CREATE TABLE members(ID INTEGER(10) NOT NULL AUTO_INCREMENT,company VARCHAR(255), joined INTEGER(10), days INTEGER(10),data TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (ID))")
+mycursor.execute("CREATE TABLE contribution(ID INTEGER(10) NOT NULL AUTO_INCREMENT,companyID INTEGER(10), contributed INTEGER(10),dailyContribution INTEGER(10), data TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (ID) ,  FOREIGN KEY (companyID) REFERENCES members(ID))")
+mycursor.execute("CREATE TABLE flights(ID INTEGER(10) NOT NULL AUTO_INCREMENT,companyID INTEGER(10), flights INTEGER(10), data TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (ID) ,  FOREIGN KEY (companyID) REFERENCES Members(ID))")
+mycursor.execute("CREATE TABLE shares(ID INTEGER(10) NOT NULL AUTO_INCREMENT,companyID INTEGER(10), shareValue FLOAT(10), data TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (ID) ,  FOREIGN KEY (companyID) REFERENCES Members(ID))")
