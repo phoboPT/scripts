@@ -18,7 +18,7 @@ mydb = mysql.connector.connect(
     host="localhost",
     user="root",
     password="1234",
-    database="jet2Data"
+    database="jet2data"
 )
 mycursor = mydb.cursor()
 
@@ -35,10 +35,9 @@ def contributionReq():
         return 0
 
 
-def getOne():
+async def getOne(args):
     now = datetime.now()
     members = json.loads(contributionReq())
-    resetDate = datetime(2020, 3, 16)
 
     data = {
         "name": "0",
@@ -57,16 +56,13 @@ def getOne():
         'flightDiff': 0,
     }
 
-    companyName = 'Gucci Express'
-    # if (len(args) == 1):
-    #     companyName = args[0]
-    # if (len(args) > 1):
-    #     companyName = f'{args[0]} {args[1]}'
+    companyName = ''
+    if (len(args) == 1):
+        companyName = args[0]
+    if (len(args) > 1):
+        companyName = f'{args[0]} {args[1]}'
 
-    # i = 0
     for x in members["members"]:
-
-        # i = i+1
         if (companyName.lower() in x["company"].lower()):
 
             selectCompanySQL = f"SELECT * FROM members WHERE company ='{x['company']}'"
@@ -225,6 +221,3 @@ def getOne():
 
             print(data)
     return data
-
-
-getOne()

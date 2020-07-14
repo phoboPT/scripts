@@ -16,7 +16,7 @@ mydb = mysql.connector.connect(
     host="localhost",
     user="root",
     password="1234",
-    database="jet2Data"
+    database="jet2data"
 )
 mycursor = mydb.cursor()
 
