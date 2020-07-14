@@ -75,7 +75,8 @@ async def saveSheet(ctx, channel):
             mycursor.execute(sqlInsertNewMember, newUser)
             mycursor.execute(selectData)
             result = mycursor.fetchall()
-
+        sqlUpdateNewMember = f"UPDATE members SET days ={player['days']} WHERE id ={result[0][0]}"
+        mycursor.execute(sqlUpdateNewMember)
         newContribution = (result[0][0], player['total'],
                            player['dailyContribution'])
         newFlight = (result[0][0], player['flights'])

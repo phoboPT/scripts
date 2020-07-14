@@ -51,7 +51,7 @@ class Contri(commands.Cog):
                             value=table["place"], inline=True)
             embed.add_field(name="Share",
                             value=table["share"], inline=True)
-            embed.set_image(url=f'''attachment://online.png''')
+            # embed.set_image(url=f'''attachment://online.png''')
 
             embed.set_footer(
                 text=f'Data updated live from the AM4 API; requests remaining: {table["totalReq"]}\nCreated by Phobo Inc')
