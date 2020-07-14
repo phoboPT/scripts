@@ -15,7 +15,7 @@ class FuelMessenger(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("hi")
-        self.sendFuel.start()
+        # self.sendFuel.start()
 
     def cog_unload(self):
         print("Unload Fuel Messenger command")
