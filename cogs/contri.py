@@ -14,7 +14,6 @@ class Contri(commands.Cog):
 
     @commands.command(name="contri", help='Member Contribution for the alliance', usage='COMPANY_NAME', description='Im a Contribution helper, you tell me your company, i tell you your performance')
     async def contri(self, ctx, *args):
-        print(ctx.channel.id)
         if (len(args) == 0):
             await ctx.send("You are missing some arguments, use !contri <Name>")
         else:
