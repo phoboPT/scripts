@@ -93,8 +93,6 @@ async def getOne(args):
             mycursor.execute(companyFlightsYesterdaySQL)
             companyFlightsYesterday = mycursor.fetchall()
 
-            print(companyFlights)
-
             # # Graph
             # # day1
             # index = f'R{row}'
@@ -219,5 +217,6 @@ async def getOne(args):
                 "%d", companyFlightsYesterday[len(companyFlightsYesterday)-1][2] - companyFlightsYesterday[0][2], grouping=True)
             data['flightDiff'] = f'{locale.format_string("%d", companyFlights[len(companyFlights)-1][2]-companyFlightsYesterday[len(companyFlightsYesterday)-1][2],grouping=True)}'
 
-            print(data)
+            print(companyContribution[len(companyContribution)-1][2],
+                  companyContributionYesterday[len(companyContributionYesterday)-1][2])
     return data
