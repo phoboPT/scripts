@@ -93,10 +93,6 @@ def getOne():
             mycursor.execute(companyContrtibutionYesterdaySQL)
             companyContributionYesterday = mycursor.fetchall()
 
-            companyShareYesterdaySQL = f"SELECT * FROM shares WHERE companyID={companyID} AND data between '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day}' AND  '{now.year}-{now.month}-{now.day}'"
-            mycursor.execute(companyShareYesterdaySQL)
-            companyShareYesterday = mycursor.fetchall()
-
             companyFlightsYesterdaySQL = f"SELECT * FROM flights WHERE companyID={companyID} AND data between '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day}' AND  '{now.year}-{now.month}-{now.day}'"
             mycursor.execute(companyFlightsYesterdaySQL)
             companyFlightsYesterday = mycursor.fetchall()
