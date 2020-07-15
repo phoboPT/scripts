@@ -18,7 +18,7 @@ class Contri(commands.Cog):
             await ctx.send("You are missing some arguments, use !contri <Name>")
         else:
             table = await contributionHelper.getOne(args)
-           # f = discord.File("online.png", filename="online.png")
+            f = discord.File("online.png", filename="online.png")
             user = self.client.get_user(ctx.author.id)
             embed = discord.Embed(title="Contribution Status",
                                   description=table["name"], color=0xff0000)
@@ -51,7 +51,7 @@ class Contri(commands.Cog):
                             value=table["place"], inline=True)
             embed.add_field(name="Share",
                             value=table["share"], inline=True)
-            # embed.set_image(url=f'''attachment://online.png''')
+            embed.set_image(url=f'''attachment://online.png''')
 
             embed.set_footer(
                 text=f'Data updated live from the AM4 API; requests remaining: {table["totalReq"]}\nCreated by Phobo Inc')
