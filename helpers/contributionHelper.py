@@ -85,11 +85,11 @@ async def getOne(args):
 
             yesterdayDate = now-timedelta(1)
 
-            companyContrtibutionYesterdaySQL = f"SELECT * FROM contribution WHERE companyID={companyID} AND data between '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} 23:59' AND  '{now.year}-{now.month}-{now.day} 23:59'"
+            companyContrtibutionYesterdaySQL = f"SELECT * FROM contribution WHERE companyID={companyID} AND data'{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} '"
             mycursor.execute(companyContrtibutionYesterdaySQL)
             companyContributionYesterday = mycursor.fetchall()
 
-            companyFlightsYesterdaySQL = f"SELECT * FROM flights WHERE companyID={companyID} AND data between '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} 23:59' AND  '{now.year}-{now.month}-{now.day} 23:59'"
+            companyFlightsYesterdaySQL = f"SELECT * FROM flights WHERE companyID={companyID} AND  '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} '"
             mycursor.execute(companyFlightsYesterdaySQL)
             companyFlightsYesterday = mycursor.fetchall()
 
@@ -215,6 +215,6 @@ async def getOne(args):
             data['yesterday'] = f'{locale.format_string("%d",companyContributionYesterday[len(companyContributionYesterday)-1][2]-companyContributionYesterday[0][2] , grouping=True)}'
             data['flightYesterday'] = locale.format_string(
                 "%d", companyFlightsYesterday[len(companyFlightsYesterday)-1][2] - companyFlightsYesterday[0][2], grouping=True)
-            data['flightDiff'] = f'{locale.format_string("%d", companyFlights[len(companyFlights)-1][2]-companyFlightsYesterday[len(companyFlightsYesterday)-1][2],grouping=True)}'
+            data['flightDiff'] = f'{locale.format_string("%d", x["flights"]-companyFlightsYesterday[len(companyFlightsYesterday)-1][2],grouping=True)}'
 
     return data
