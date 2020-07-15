@@ -25,9 +25,9 @@ class Update(commands.Cog):
     async def updateSheet(self, ctx):
         channel = self.client.get_channel(725038386208833576)
         print(f' called the update')
-        await ctx.send(f"Updating Sheet ")
-        await updateContribution.saveSheet(ctx, channel)
-        await ctx.send("Sheet Updated")
+        # await ctx.send(f"Updating Sheet ")
+        # await updateContribution.saveSheet(ctx, channel)
+        # await ctx.send("Sheet Updated")
 
     @tasks.loop(seconds=3600)
     async def update(self):
