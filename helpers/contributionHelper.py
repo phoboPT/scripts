@@ -85,11 +85,11 @@ async def getOne(args):
 
             yesterdayDate = now-timedelta(1)
 
-            companyContrtibutionYesterdaySQL = f"SELECT * FROM contribution WHERE companyID={companyID} AND data'{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} '"
+            companyContrtibutionYesterdaySQL = f"SELECT * FROM contribution WHERE companyID={companyID} AND data ='{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day}'"
             mycursor.execute(companyContrtibutionYesterdaySQL)
             companyContributionYesterday = mycursor.fetchall()
 
-            companyFlightsYesterdaySQL = f"SELECT * FROM flights WHERE companyID={companyID} AND  '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} '"
+            companyFlightsYesterdaySQL = f"SELECT * FROM flights WHERE companyID={companyID} AND  data ='{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} '"
             mycursor.execute(companyFlightsYesterdaySQL)
             companyFlightsYesterday = mycursor.fetchall()
 
