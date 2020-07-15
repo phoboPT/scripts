@@ -165,7 +165,7 @@ async def getOne(args):
                 "%d", fligthsDay, grouping=True)
             data['contriFligth'] = f'$ {contriFligth}'
             data['share'] = f'$ {companyShare[len(companyShare)-1][2]}'
-            # data['place'] = f'$ {locale.format_string("%d", total, grouping=True)}'
+            data['place'] = f'$ {locale.format_string("%d", total, grouping=True)}'
             data['diffYesterday'] = f'$ {locale.format_string("%d", x["contributed"]-companyContributionYesterday[len(companyContributionYesterday)-1][2],grouping=True)}'
             data['yesterday'] = f'$ {locale.format_string("%d",companyContributionYesterday[len(companyContributionYesterday)-1][2]-companyContributionYesterday[0][2] , grouping=True)}'
             data['flightYesterday'] = locale.format_string(
