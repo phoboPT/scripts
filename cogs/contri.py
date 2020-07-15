@@ -55,7 +55,7 @@ class Contri(commands.Cog):
 
             embed.set_footer(
                 text=f'Data updated live from the AM4 API; requests remaining: {table["totalReq"]}\nCreated by Phobo Inc')
-            await ctx.send(embed=embed)
+            await ctx.send(file=f, embed=embed)
 
         print(f'{ctx.author} called the contribution helper')
 
