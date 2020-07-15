@@ -121,7 +121,7 @@ async def getOne(args):
                 8, f'{locale.format_string("%d", last,grouping=True)}')
 
             i = 0
-            for x in days:
+            for _ in days:
                 days[i] = f'{locale.format_string("%d", days[i],grouping=True)}'
                 i += 1
 
@@ -146,7 +146,6 @@ async def getOne(args):
             plt.savefig("online.png")
             plt.close(fig=fig)
 
-            print(len(companyContribution))
             if (len(companyContribution) >= 1):
 
                 contriDay = round(member["contributed"] / companyData[0][3], 2)
@@ -170,5 +169,5 @@ async def getOne(args):
                 data['flightYesterday'] = locale.format_string(
                     "%d", companyFlightsYesterday[len(companyFlightsYesterday)-1][2] - companyFlightsYesterday[0][2], grouping=True)
                 data['flightDiff'] = f'{locale.format_string("%d", member["flights"]-companyFlightsYesterday[len(companyFlightsYesterday)-1][2],grouping=True)}'
-                print(data)
+
     return data
