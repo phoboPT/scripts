@@ -85,11 +85,11 @@ async def getOne(args):
 
             yesterdayDate = now-timedelta(1)
 
-            companyContrtibutionYesterdaySQL = f"SELECT * FROM contribution WHERE companyID={companyID} AND data between '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day}' AND  '{now.year}-{now.month}-{now.day}'"
+            companyContrtibutionYesterdaySQL = f"SELECT * FROM contribution WHERE companyID={companyID} AND data between '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day}' AND  '{now.year}-{now.month}-{now.day} 23:59'"
             mycursor.execute(companyContrtibutionYesterdaySQL)
             companyContributionYesterday = mycursor.fetchall()
 
-            companyFlightsYesterdaySQL = f"SELECT * FROM flights WHERE companyID={companyID} AND data between '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day}' AND  '{now.year}-{now.month}-{now.day}'"
+            companyFlightsYesterdaySQL = f"SELECT * FROM flights WHERE companyID={companyID} AND data between '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day}' AND  '{now.year}-{now.month}-{now.day} 23:59'"
             mycursor.execute(companyFlightsYesterdaySQL)
             companyFlightsYesterday = mycursor.fetchall()
 
@@ -193,16 +193,16 @@ async def getOne(args):
 
             # if (int(delta2.days) < int(delta)):
             #     delta = delta2.days
-
-            contriDay = round(companyContribution[len(
-                companyContribution)-1][2] / companyData[0][3], 2)
+            if (len(companyContribution) < 1):
+                return data
+            contriDay = round(x["contributed"] / companyData[0][3], 2)
             fligthsDay = int(
                 companyFlights[len(companyFlights)-1][2] / companyData[0][3])
-            contriFligth = round(companyContribution[len(
-                companyContribution)-1][2]/companyFlights[len(companyFlights)-1][2], 2)
+            contriFligth = round(
+                x["contributed"]/companyFlights[len(companyFlights)-1][2], 2)
             data["name"] = companyData[0][1]
             data["days"] = companyData[0][3]
-            data["total"] = f'$ {locale.format_string("%d", companyContribution[len(companyContribution)-1][2],grouping=True)}'
+            data["total"] = f'$ {locale.format_string("%d", x["contributed"],grouping=True)}'
             data['avr'] = f'$ {locale.format_string("%d", contriDay, grouping=True)}'
             data['flights'] = locale.format_string(
                 "%d",  companyFlights[len(companyFlights)-1][2], grouping=True)
@@ -211,12 +211,10 @@ async def getOne(args):
             data['contriFligth'] = f'$ {contriFligth}'
             data['share'] = f'$ {companyShare[len(companyShare)-1][2]}'
             # data['place'] = f'$ {locale.format_string("%d", total, grouping=True)}'
-            data['diffYesterday'] = f'$ {locale.format_string("%d", companyContribution[len(companyContribution)-1][2]-companyContributionYesterday[len(companyContributionYesterday)-1][2],grouping=True)}'
+            data['diffYesterday'] = f'$ {locale.format_string("%d", x["contributed"]-companyContributionYesterday[len(companyContributionYesterday)-1][2],grouping=True)}'
             data['yesterday'] = f'{locale.format_string("%d",companyContributionYesterday[len(companyContributionYesterday)-1][2]-companyContributionYesterday[0][2] , grouping=True)}'
             data['flightYesterday'] = locale.format_string(
                 "%d", companyFlightsYesterday[len(companyFlightsYesterday)-1][2] - companyFlightsYesterday[0][2], grouping=True)
             data['flightDiff'] = f'{locale.format_string("%d", companyFlights[len(companyFlights)-1][2]-companyFlightsYesterday[len(companyFlightsYesterday)-1][2],grouping=True)}'
 
-            print(companyContribution[len(companyContribution)-1][2],
-                  companyContributionYesterday[len(companyContributionYesterday)-1][2])
     return data
