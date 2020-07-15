@@ -103,7 +103,7 @@ async def getOne(args):
                 companyContribution = mycursor.fetchall()
                 if (len(companyContribution) < 1):
                     break
-                days[len(days)-1] = companyContribution[len(
+                days[len(days)-i] = companyContribution[len(
                     companyContribution) - 1][2] - companyContribution[0][2]
 
             total = 0
