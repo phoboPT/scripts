@@ -97,6 +97,7 @@ async def getOne(args):
             for _ in days:
                 i += 1
                 yesterdayDate = now - timedelta(i)
+
                 companyCSQL = f"SELECT * FROM contribution WHERE companyID = {companyID} AND  data between'{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} 00:00' AND '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} 23:59'"
                 mycursor.execute(companyCSQL)
                 companyC = mycursor.fetchall()
@@ -176,7 +177,7 @@ async def getOne(args):
 async def getAll():
     now = datetime.now()
     members = json.loads(contributionReq())
-    data = {"0": "", "1": "", "2": "", "3": ""}
+    data = {"0": "", "1": "", "2": "", "3": "", "4": "", "5": ""}
     message = ""
     message1 = ""
     message2 = ""
@@ -204,7 +205,6 @@ async def getAll():
         days = [0,  0,  0, 0,  0,  0,  0,  0]
 
         for _ in days:
-
             yesterdayDate = now - timedelta(i)
             companyCSQL = f"SELECT * FROM contribution WHERE companyID = {companyID} AND  data between'{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} 00:00' AND '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} 23:59'"
             mycursor.execute(companyCSQL)
@@ -216,7 +216,7 @@ async def getAll():
         total = 0
         for day in days:
             total = total + day
-        print(companyData[0][1])
+
         if (len(companyContribution) >= 1):
             companyName = companyData[0][1]
             # data 0
