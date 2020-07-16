@@ -171,3 +171,412 @@ async def getOne(args):
                 data['flightDiff'] = f'{locale.format_string("%d", member["flights"]-companyFlightsYesterday[len(companyFlightsYesterday)-1][2],grouping=True)}'
 
     return data
+
+
+async def getAll():
+    now = datetime.now()
+    members = json.loads(contributionReq())
+    data = {"0": "", "1": "", "2": "", "3": ""}
+    message = ""
+    message1 = ""
+    message2 = ""
+    message3 = ""
+    message4 = ""
+    message5 = ""
+    i = 0
+    for member in members["members"]:
+        i += 1
+        selectCompanySQL = f"SELECT * FROM members WHERE company ='{member['company']}'"
+        mycursor.execute(selectCompanySQL)
+        companyData = mycursor.fetchall()
+        companyID = companyData[0][0]
+
+        companyContrtibutionSQL = f"SELECT * FROM contribution WHERE companyID={companyID} AND data > '{now.year}-{now.month}-{now.day} '"
+        mycursor.execute(companyContrtibutionSQL)
+        companyContribution = mycursor.fetchall()
+
+        yesterdayDate = now - timedelta(1)
+
+        companyContrtibutionYesterdaySQL = f"SELECT * FROM contribution WHERE companyID = {companyID} AND  data between'{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} 00:00' AND '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} 23:59'"
+        mycursor.execute(companyContrtibutionYesterdaySQL)
+        companyContributionYesterday = mycursor.fetchall()
+
+        days = [0,  0,  0, 0,  0,  0,  0,  0]
+
+        for _ in days:
+
+            yesterdayDate = now - timedelta(i)
+            companyCSQL = f"SELECT * FROM contribution WHERE companyID = {companyID} AND  data between'{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} 00:00' AND '{yesterdayDate.year}-{yesterdayDate.month}-{yesterdayDate.day} 23:59'"
+            mycursor.execute(companyCSQL)
+            companyC = mycursor.fetchall()
+            if (len(companyC) > 1):
+                days[len(days)-i] = companyC[len(
+                    companyC) - 1][2] - companyC[0][2]
+
+        total = 0
+        for day in days:
+            total = total + day
+        print(companyData[0][1])
+        if (len(companyContribution) >= 1):
+            companyName = companyData[0][1]
+            # data 0
+            if(i <= 10):
+                if (len(companyName) <= 13):
+                    offset = (13-len(companyName))
+                    message = message + companyName
+                    for _ in range(offset+1):
+                        message += " "
+                elif (len(companyName) > 13):
+                    string = companyName[:11] + '.. '
+                    message = message + string
+
+                if (len(str(companyData[0][3])) < 4):
+                    offset = (4-len(str(companyData[0][3])))
+                    message = message + str(companyData[0][3])
+                    for _ in range(offset+1):
+                        message += " "
+                else:
+                    message = message + str(companyData[0][3]) + " "
+
+                string = f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+                if (len(string) < 10):
+                    offset = (10-len(string))
+                    message = message + string
+                    for _ in range(offset+1):
+                        message += " "
+                else:
+                    message = message + \
+                        f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+
+                string = f'${locale.format_string("%d", total, grouping=True)} '
+                if (len(string) < 8):
+                    offset = (8-len(string))
+                    message = message + string
+                    for _ in range(offset+1):
+                        message += " "
+                else:
+                    message = message + string
+                if (len(companyContributionYesterday) > 0):
+                    valor = companyContributionYesterday[len(
+                        companyContributionYesterday) - 1][2]
+                    valor2 = companyContributionYesterday[0][2]
+                string = f'${locale.format_string("%d", member["contributed"]-valor,grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message = message + string
+                    for _ in range(offset+1):
+                        message += " "
+                else:
+                    message = message + string
+
+                string = f'${locale.format_string("%d",valor-valor2 , grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message = message + string
+                    for _ in range(offset+1):
+                        message += " "
+                else:
+                    message = message + string
+                message = message+"\n"
+            # data 1
+            elif(i > 10 and i <= 20):
+                if (len(companyName) <= 13):
+                    offset = (13-len(companyName))
+                    message1 = message1 + companyName
+                    for _ in range(offset+1):
+                        message1 += " "
+                elif (len(companyName) > 13):
+                    string = companyName[:11] + '.. '
+                    message1 = message1 + string
+
+                if (len(str(companyData[0][3])) < 4):
+                    offset = (4-len(str(companyData[0][3])))
+                    message1 = message1 + str(companyData[0][3])
+                    for _ in range(offset+1):
+                        message1 += " "
+                else:
+                    message1 = message1 + str(companyData[0][3]) + " "
+
+                string = f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+                if (len(string) < 10):
+                    offset = (10-len(string))
+                    message1 = message1 + string
+                    for _ in range(offset+1):
+                        message1 += " "
+                else:
+                    message1 = message1 + \
+                        f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+
+                string = f'${locale.format_string("%d", total, grouping=True)} '
+                if (len(string) < 8):
+                    offset = (8-len(string))
+                    message1 = message1 + string
+                    for _ in range(offset+1):
+                        message1 += " "
+                else:
+                    message1 = message1 + string
+                if (len(companyContributionYesterday) > 0):
+                    valor = companyContributionYesterday[len(
+                        companyContributionYesterday) - 1][2]
+                    valor2 = companyContributionYesterday[0][2]
+                string = f'${locale.format_string("%d", member["contributed"]-valor,grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message1 = message1 + string
+                    for _ in range(offset+1):
+                        message1 += " "
+                else:
+                    message1 = message1 + string
+
+                string = f'${locale.format_string("%d",valor-valor2 , grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message1 = message1 + string
+                    for _ in range(offset+1):
+                        message1 += " "
+                else:
+                    message1 = message1 + string
+                message1 = message1+"\n"
+             # data 2
+            elif(i > 20 and i <= 30):
+                if (len(companyName) <= 13):
+                    offset = (13-len(companyName))
+                    message2 = message2 + companyName
+                    for _ in range(offset+1):
+                        message2 += " "
+                elif (len(companyName) > 13):
+                    string = companyName[:11] + '.. '
+                    message2 = message2 + string
+
+                if (len(str(companyData[0][3])) < 4):
+                    offset = (4-len(str(companyData[0][3])))
+                    message2 = message2 + str(companyData[0][3])
+                    for _ in range(offset+1):
+                        message2 += " "
+                else:
+                    message2 = message2 + str(companyData[0][3]) + " "
+
+                string = f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+                if (len(string) < 10):
+                    offset = (10-len(string))
+                    message2 = message2 + string
+                    for _ in range(offset+1):
+                        message2 += " "
+                else:
+                    message2 = message2 + \
+                        f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+
+                string = f'${locale.format_string("%d", total, grouping=True)} '
+                if (len(string) < 8):
+                    offset = (8-len(string))
+                    message2 = message2 + string
+                    for _ in range(offset+1):
+                        message2 += " "
+                else:
+                    message2 = message2 + string
+                if (len(companyContributionYesterday) > 0):
+                    valor = companyContributionYesterday[len(
+                        companyContributionYesterday) - 1][2]
+                    valor2 = companyContributionYesterday[0][2]
+                string = f'${locale.format_string("%d", member["contributed"]-valor,grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message2 = message2 + string
+                    for _ in range(offset+1):
+                        message2 += " "
+                else:
+                    message2 = message2 + string
+
+                string = f'${locale.format_string("%d",valor-valor2 , grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message2 = message2 + string
+                    for _ in range(offset+1):
+                        message2 += " "
+                else:
+                    message2 = message2 + string
+                message2 = message2+"\n"
+            # data 3
+            elif(i > 30 and i <= 40):
+                if (len(companyName) <= 13):
+                    offset = (13-len(companyName))
+                    message3 = message3 + companyName
+                    for _ in range(offset+1):
+                        message3 += " "
+                elif (len(companyName) > 13):
+                    string = companyName[:11] + '.. '
+                    message3 = message3 + string
+
+                if (len(str(companyData[0][3])) < 4):
+                    offset = (4-len(str(companyData[0][3])))
+                    message3 = message3 + str(companyData[0][3])
+                    for _ in range(offset+1):
+                        message3 += " "
+                else:
+                    message3 = message3 + str(companyData[0][3]) + " "
+
+                string = f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+                if (len(string) < 10):
+                    offset = (10-len(string))
+                    message3 = message3 + string
+                    for _ in range(offset+1):
+                        message3 += " "
+                else:
+                    message3 = message3 + \
+                        f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+
+                string = f'${locale.format_string("%d", total, grouping=True)} '
+                if (len(string) < 8):
+                    offset = (8-len(string))
+                    message3 = message3 + string
+                    for _ in range(offset+1):
+                        message3 += " "
+                else:
+                    message3 = message3 + string
+                if (len(companyContributionYesterday) > 0):
+                    valor = companyContributionYesterday[len(
+                        companyContributionYesterday) - 1][2]
+                    valor2 = companyContributionYesterday[0][2]
+                string = f'${locale.format_string("%d", member["contributed"]-valor,grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message3 = message3 + string
+                    for _ in range(offset+1):
+                        message3 += " "
+                else:
+                    message3 = message3 + string
+
+                string = f'${locale.format_string("%d",valor-valor2 , grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message3 = message3 + string
+                    for _ in range(offset+1):
+                        message3 += " "
+                else:
+                    message3 = message3 + string
+                message3 = message3+"\n"
+            elif(i > 40 and i <= 50):
+                if (len(companyName) <= 13):
+                    offset = (13-len(companyName))
+                    message4 = message4 + companyName
+                    for _ in range(offset+1):
+                        message4 += " "
+                elif (len(companyName) > 13):
+                    string = companyName[:11] + '.. '
+                    message4 = message4 + string
+
+                if (len(str(companyData[0][3])) < 4):
+                    offset = (4-len(str(companyData[0][3])))
+                    message4 = message4 + str(companyData[0][3])
+                    for _ in range(offset+1):
+                        message4 += " "
+                else:
+                    message4 = message4 + str(companyData[0][3]) + " "
+
+                string = f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+                if (len(string) < 10):
+                    offset = (10-len(string))
+                    message4 = message4 + string
+                    for _ in range(offset+1):
+                        message4 += " "
+                else:
+                    message4 = message4 + \
+                        f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+
+                string = f'${locale.format_string("%d", total, grouping=True)} '
+                if (len(string) < 8):
+                    offset = (8-len(string))
+                    message4 = message4 + string
+                    for _ in range(offset+1):
+                        message4 += " "
+                else:
+                    message4 = message4 + string
+                if (len(companyContributionYesterday) > 0):
+                    valor = companyContributionYesterday[len(
+                        companyContributionYesterday) - 1][2]
+                    valor2 = companyContributionYesterday[0][2]
+                string = f'${locale.format_string("%d", member["contributed"]-valor,grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message4 = message4 + string
+                    for _ in range(offset+1):
+                        message4 += " "
+                else:
+                    message4 = message4 + string
+
+                string = f'${locale.format_string("%d",valor-valor2 , grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message4 = message4 + string
+                    for _ in range(offset+1):
+                        message4 += " "
+                else:
+                    message4 = message4 + string
+                message4 = message4+"\n"
+            else:
+                if (len(companyName) <= 13):
+                    offset = (13-len(companyName))
+                    message5 = message5 + companyName
+                    for _ in range(offset+1):
+                        message5 += " "
+                elif (len(companyName) > 13):
+                    string = companyName[:11] + '.. '
+                    message5 = message5 + string
+
+                if (len(str(companyData[0][3])) < 4):
+                    offset = (4-len(str(companyData[0][3])))
+                    message5 = message5 + str(companyData[0][3])
+                    for _ in range(offset+1):
+                        message5 += " "
+                else:
+                    message5 = message5 + str(companyData[0][3]) + " "
+
+                string = f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+                if (len(string) < 10):
+                    offset = (10-len(string))
+                    message5 = message5 + string
+                    for _ in range(offset+1):
+                        message5 += " "
+                else:
+                    message5 = message5 + \
+                        f'${locale.format_string("%d", member["contributed"],grouping=True)} '
+
+                string = f'${locale.format_string("%d", total, grouping=True)} '
+                if (len(string) < 8):
+                    offset = (8-len(string))
+                    message5 = message5 + string
+                    for _ in range(offset+1):
+                        message5 += " "
+                else:
+                    message5 = message5 + string
+                if (len(companyContributionYesterday) > 0):
+                    valor = companyContributionYesterday[len(
+                        companyContributionYesterday) - 1][2]
+                    valor2 = companyContributionYesterday[0][2]
+                string = f'${locale.format_string("%d", member["contributed"]-valor,grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message5 = message5 + string
+                    for _ in range(offset+1):
+                        message5 += " "
+                else:
+                    message5 = message5 + string
+
+                string = f'${locale.format_string("%d",valor-valor2 , grouping=True)} '
+                if (len(string) < 9):
+                    offset = (9-len(string))
+                    message5 = message5 + string
+                    for _ in range(offset+1):
+                        message5 += " "
+                else:
+                    message5 = message5 + string
+                message5 = message5+"\n"
+
+    data["0"] = message
+    data["1"] = message1
+    data["2"] = message2
+    data["3"] = message3
+    data["4"] = message4
+    data["5"] = message5
+
+    return data
