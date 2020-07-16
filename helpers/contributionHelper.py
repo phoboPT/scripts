@@ -159,7 +159,7 @@ async def getOne(args):
                 data["total"] = f'$ {locale.format_string("%d", member["contributed"],grouping=True)}'
                 data['avr'] = f'$ {locale.format_string("%d", contriDay, grouping=True)}'
                 data['flights'] = locale.format_string(
-                    "%d",  companyFlights[len(companyFlights)-1][2], grouping=True)
+                    "%d",  member["flights"], grouping=True)
                 data['fligthsAvr'] = locale.format_string(
                     "%d", fligthsDay, grouping=True)
                 data['contriFligth'] = f'$ {contriFligth}'
