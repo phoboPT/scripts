@@ -1,5 +1,6 @@
 from discord.ext import commands
 import discord
+from helpers import isAdmin
 from helpers import contributionHelper
 
 
@@ -13,6 +14,7 @@ class Contri(commands.Cog):
         print("Unload contri command")
 
     @commands.command(name="contriall", help='Member Contribution for the alliance', usage='COMPANY_NAME', description='Im a Contribution helper, you tell me your company, i tell you your performance')
+    @commands.check(isAdmin.isAdmin)
     async def contri(self, ctx, *args):
         text = await contributionHelper.getAll()
 
